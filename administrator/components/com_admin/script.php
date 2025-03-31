@@ -1,5 +1,8 @@
 <?php
 /**
+ * el paquete joomla.administrator, esta definido para que el administrador del sitio pueda usar los elementos de joomla sobre la cual esta montada la pagina
+ * Este archivo define el script de instalación y actualización para Joomla CMS.
+ * 
  * @package     Joomla.Administrator
  * @subpackage  com_admin
  *
@@ -7,6 +10,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+ // Restringe el acceso directo al script
 defined('_JEXEC') or die;
 
 /**
@@ -20,60 +24,77 @@ class JoomlaInstallerScript
 {
 	/**
 	 * Method to update Joomla!
+	 * metodo para actualizar joomla
 	 *
-	 * @param   JInstallerFile  $installer  The class calling this method
+	 * @param   JInstallerFile  $installer  The class calling this method, metodo que invoca este metodo
 	 *
 	 * @return void
 	 */
 	public function update($installer)
 	{
+		//configuracion del registro de actualizaciones
 		$options['format'] = '{DATE}\t{TIME}\t{LEVEL}\t{CODE}\t{MESSAGE}';
 		$options['text_file'] = 'joomla_update.php';
 		JLog::addLogger($options, JLog::INFO, array('Update', 'databasequery', 'jerror'));
 		JLog::add(JText::_('COM_JOOMLAUPDATE_UPDATE_LOG_DELETE_FILES'), JLog::INFO, 'Update');
 
-		$this->deleteUnexistingFiles();
-		$this->updateManifestCaches();
-		$this->updateDatabase();
-		$this->clearRadCache();
-		$this->updateAssets();
+		//ejecuta una serie de procesos necesarios para la actualizacion
+		$this->deleteUnexistingFiles(); //elimina archivos obsoletos
+		$this->updateManifestCaches(); //actualiza los caches de los manifiestos
+		$this->updateDatabase(); //aplica cambios en la base de datos
+		$this->clearRadCache(); //limpia la cache del sistema
+		$this->updateAssets(); //actualiza los recursos y permisos
 	}
 
 	/**
 	 * Medtho to update Database
+	 * metodo para actualizar la base de datos con los cambios requeridos
 	 *
 	 * @return void
 	 */
+
+	 //actualiza la base de datos asegurando que la tabla `#__update_sites_extensions` utilice el motor de almacenamiento predeterminado del servidor MySQL
 	protected function updateDatabase()
 	{
+		//obtiene la instancia de la base de datos
 		$db = JFactory::getDbo();
 
+		//verifica si la base de datos es MySQL
 		if (substr($db->name, 0, 5) == 'mysql')
 		{
+			//consulta los motores de almacenamiento soportados por MySQL
 			$db->setQuery('SHOW ENGINES');
 			$results = $db->loadObjectList();
 
+			//verifica si ocurrio un error al ejecutar la consulta
 			if ($db->getErrorNum())
 			{
+				//muestra un mensaje de error en caso de fallo
 				echo JText::sprintf('JLIB_DATABASE_ERROR_FUNCTION_FAILED', $db->getErrorNum(), $db->getErrorMsg()) . '<br />';
 
 				return;
 			}
 
+			//recorre los motores de almacenamiento disponibles
 			foreach ($results as $result)
 			{
+				//busca el motor de almacenamiento por defecto del servidor MySQL
 				if ($result->Support == 'DEFAULT')
 				{
+					//cambia el motor de la tabla `#__update_sites_extensions` al motor por defecto
 					$db->setQuery('ALTER TABLE #__update_sites_extensions ENGINE = ' . $result->Engine);
 					$db->execute();
 
+					//verifica si ocurrio un eror al ejecutar la consulta
 					if ($db->getErrorNum())
 					{
+						//muestra un mensaje de error en caso de fallo
 						echo JText::sprintf('JLIB_DATABASE_ERROR_FUNCTION_FAILED', $db->getErrorNum(), $db->getErrorMsg()) . '<br />';
 
 						return;
 					}
 
+					//sale del bucle despues de aplicar el cambio
 					break;
 				}
 			}
@@ -82,6 +103,10 @@ class JoomlaInstallerScript
 
 	/**
 	 * Update the manifest caches
+	 * Actualiza la cache de los manifiestos de extensiones en joomla
+	 * 
+	 * esta funcion recopila una lista de extensiones principales de joomla, incluidas componentes, bibliotecas, modulos, plugins, plantillas, idiomas y archivos. Luego, intenta
+	 * actualizar la cache de manifiestos de cada una de ellas (cache de manifiesto = archivo de texto que indica al navegador que recursos debe almacenar en cache para acceder a ellos sin conexion a internet)
 	 *
 	 * @return void
 	 */
@@ -89,7 +114,10 @@ class JoomlaInstallerScript
 	{
 		$extensions = array();
 
+		//definicion de extensiones por tipo
+
 		// Components
+		//componentes
 		// `type`, `element`, `folder`, `client_id`
 		$extensions[] = array('component', 'com_mailto', '', 0);
 		$extensions[] = array('component', 'com_wrapper', '', 0);
@@ -122,6 +150,7 @@ class JoomlaInstallerScript
 		$extensions[] = array('component', 'com_postinstall', '', 1);
 
 		// Libraries
+		//bibliotecas
 		$extensions[] = array('library', 'phpmailer', '', 0);
 		$extensions[] = array('library', 'simplepie', '', 0);
 		$extensions[] = array('library', 'phputf8', '', 0);
@@ -131,6 +160,7 @@ class JoomlaInstallerScript
 		$extensions[] = array('library', 'phpass', '', 0);
 
 		// Modules site
+		//modulos del sitio y administrador
 		// Site
 		$extensions[] = array('module', 'mod_articles_archive', '', 0);
 		$extensions[] = array('module', 'mod_articles_latest', '', 0);
@@ -175,6 +205,7 @@ class JoomlaInstallerScript
 		$extensions[] = array('module', 'mod_multilangstatus', '', 1);
 
 		// Plug-ins
+		//plugins
 		$extensions[] = array('plugin', 'gmail', 'authentication', 0);
 		$extensions[] = array('plugin', 'joomla', 'authentication', 0);
 		$extensions[] = array('plugin', 'ldap', 'authentication', 0);
@@ -224,27 +255,32 @@ class JoomlaInstallerScript
 		$extensions[] = array('plugin', 'totp', 'twofactorauth', 0);
 
 		// Templates
+		//plantillas
 		$extensions[] = array('template', 'beez3', '', 0);
 		$extensions[] = array('template', 'hathor', '', 1);
 		$extensions[] = array('template', 'protostar', '', 0);
 		$extensions[] = array('template', 'isis', '', 1);
 
 		// Languages
+		//idiomas
 		$extensions[] = array('language', 'en-GB', '', 0);
 		$extensions[] = array('language', 'en-GB', '', 1);
 
 		// Files
+		//archivos
 		$extensions[] = array('file', 'joomla', '', 0);
 
 		// Packages
 		// None in core at this time
 
 		// Attempt to refresh manifest caches
+		// conexion con la base de datos
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true)
 			->select('*')
 			->from('#__extensions');
 
+			//agrega condiciones para cada extension en la consulta
 		foreach ($extensions as $extension)
 		{
 			$query->where(
@@ -260,6 +296,7 @@ class JoomlaInstallerScript
 		$installer = new JInstaller;
 
 		// Check for a database error.
+		//verificar errores en la base de datos
 		if ($db->getErrorNum())
 		{
 			echo JText::sprintf('JLIB_DATABASE_ERROR_FUNCTION_FAILED', $db->getErrorNum(), $db->getErrorMsg()) . '<br />';
@@ -267,6 +304,7 @@ class JoomlaInstallerScript
 			return;
 		}
 
+		//recorre cada extension y actualiza la cache del manifiesto
 		foreach ($extensions as $extension)
 		{
 			if (!$installer->refreshManifestCache($extension->extension_id))
@@ -278,11 +316,13 @@ class JoomlaInstallerScript
 
 	/**
 	 * Delete files that should not exist
+	 * Elimina archivos especificos que ya no existen en el sistema
 	 *
 	 * @return void
 	 */
 	public function deleteUnexistingFiles()
 	{
+		//lista de archivos a eliminar segun avanza la version de joomla
 		$files = array(
 			'/libraries/cms/cmsloader.php',
 			'/libraries/joomla/form/fields/templatestyle.php',
@@ -1030,6 +1070,9 @@ class JoomlaInstallerScript
 		);
 
 		// TODO There is an issue while deleting folders using the ftp mode
+		//NOTA: Hay un problema conocido al eliminar carpetas usando el modo FTP
+
+		//lista de carpetas que deben ser eliminados
 		$folders = array(
 			'/administrator/components/com_admin/sql/updates/sqlsrv',
 			'/media/com_finder/images/mime',
@@ -1086,8 +1129,10 @@ class JoomlaInstallerScript
 			'/libraries/joomla/registry',
 		);
 
+		//importa la calse para manejar archivos en joomla
 		jimport('joomla.filesystem.file');
 
+		//recorre la lista de archivos y los elimina si existen
 		foreach ($files as $file)
 		{
 			if (JFile::exists(JPATH_ROOT . $file) && !JFile::delete(JPATH_ROOT . $file))
@@ -1096,8 +1141,10 @@ class JoomlaInstallerScript
 			}
 		}
 
+		//importa la calse para manerjar carpetas en joomla
 		jimport('joomla.filesystem.folder');
 
+		//recorre la lista de carpetas y las elimina si existen
 		foreach ($folders as $folder)
 		{
 			if (JFolder::exists(JPATH_ROOT . $folder) && !JFolder::delete(JPATH_ROOT . $folder))
@@ -1110,6 +1157,11 @@ class JoomlaInstallerScript
 	/**
 	 * Clears the RAD layer's table cache. The cache vastly improves performance
 	 * but needs to be cleared every time you update the database schema.
+	 * 
+	 * Borra la cache de la capa RAD (Rapid Application Development) en joomla
+	 * 
+	 * La capa RAD almacena en cache informacion sobre la estructura de la base de datos, para mejorar el rendimiento. sin embargo, cada vez que se actualiza
+	 * el esquema de la base de datos, es necesario eliminar esta cache para evitar inconsistencias.
 	 *
 	 * @return  void
 	 *
@@ -1117,8 +1169,10 @@ class JoomlaInstallerScript
 	 */
 	protected function clearRadCache()
 	{
+		//importa la calse de manejo de archivos de joomla
 		jimport('joomla.filesystem.file');
 
+		//verifica si el archivo de cache existe y lo elimina
 		if (JFile::exists(JPATH_CACHE . '/fof/cache.php'))
 		{
 			JFile::delete(JPATH_CACHE . '/fof/cache.php');
@@ -1127,6 +1181,10 @@ class JoomlaInstallerScript
 
 	/**
 	 * Method to create assets for newly installed components
+	 * Crea los registros de activos (assets) para los componentes recien instalados en joomla
+	 * 
+	 * Los activos en joomla definen permisos y relaciones jerarquicas entre los diferentes componentes del sistema.
+	 * Este metodo revisa si los componentes introducidos desde joomla 1.6 en adelante tiene un registro de activos, y si no lo tienen, lo crea.
 	 *
 	 * @return  void
 	 *
@@ -1135,6 +1193,7 @@ class JoomlaInstallerScript
 	public function updateAssets()
 	{
 		// List all components added since 1.6
+		//lista los componentes introducidos despues de joomla 1.6
 		$newComponents = array(
 			'com_finder',
 			'com_joomlaupdate',
@@ -1148,17 +1207,21 @@ class JoomlaInstallerScript
 		{
 			$asset = JTable::getInstance('Asset');
 
+			//verifica si el activo ya existe en la base de datos
 			if (!$asset->loadByName($component))
 			{
+				//si no existe, crea un nuevo registro de activo
 				$asset->name = $component;
-				$asset->parent_id = 1;
-				$asset->rules = '{}';
+				$asset->parent_id = 1; //ID del padre (generalmente el grupo de administrtacion)
+				$asset->rules = '{}'; //reglas de acceso (vacias por defecto)
 				$asset->title = $component;
-				$asset->setLocation(1, 'last-child');
+				$asset->setLocation(1, 'last-child'); //establece su ubicacion en la jerarquia
 
+				//intenta guardar el nuevo activo en la base de datos
 				if (!$asset->store())
 				{
 					// Install failed, roll back changes
+					//si ocurre un error, aborta la instalacion y revierte los cambios
 					$this->parent->abort(JText::sprintf('JLIB_INSTALLER_ABORT_COMP_INSTALL_ROLLBACK', $db->stderr(true)));
 
 					return false;
@@ -1166,6 +1229,6 @@ class JoomlaInstallerScript
 			}
 		}
 
-		return true;
+		return true; //retorna tru si todo se ejecuta correctamente
 	}
 }

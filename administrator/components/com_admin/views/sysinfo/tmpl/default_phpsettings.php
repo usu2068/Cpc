@@ -1,5 +1,9 @@
 <?php
 /**
+ * el paquete joomla.administrator, esta definido para que el administrador del sitio pueda usar los elementos de joomla sobre la cual esta montada la pagina
+ * 
+ * Este código genera una tabla en la administración de Joomla que muestra información relevante sobre la configuración de PHP.
+ * Se encarga de listar varias directivas y extensiones clave de PHP, indicando su estado actual.
  * @package     Joomla.Administrator
  * @subpackage  com_admin
  *
@@ -7,12 +11,22 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+  //se evita el acceso al archivo en un entorno fuera de joomla, Evita que el archivo se ejecute directamente desde el navegador., Protege el sistema de accesos no autorizados.
 defined('_JEXEC') or die;
 ?>
+
+<!--Crea un <fieldset> con la clase adminform, usada para aplicar estilos en la administración de Joomla.
+	Define un título (legend) con JText::_('COM_ADMIN_RELEVANT_PHP_SETTINGS'), permitiendo traducción automática.-->
 <fieldset class="adminform">
 	<legend><?php echo JText::_('COM_ADMIN_RELEVANT_PHP_SETTINGS'); ?></legend>
+
+	<!--Define una tabla con la clase table table-striped, lo que aplica estilos predeterminados de Joomla.-->
 	<table class="table table-striped">
 		<thead>
+			<!--Crea dos columnas:
+				"COM_ADMIN_SETTING": Nombre de la configuración de PHP.
+				"COM_ADMIN_VALUE": Valor actual de la configuración.
+			.-->
 			<tr>
 				<th width="250">
 					<?php echo JText::_('COM_ADMIN_SETTING'); ?>
@@ -28,6 +42,17 @@ defined('_JEXEC') or die;
 				</td>
 			</tr>
 		</tfoot>
+
+		<!--Cada fila muestra una configuración de PHP almacenada en $this->php_settings.
+			Los valores se renderizan con JHtml::_('phpsetting.tipo', $valor), lo que formatea los valores correctamente.
+			Muestra la configuración safe_mode.
+			Usa JHtml::_('phpsetting.boolean', $valor), que convierte el valor en "Sí" (true) o "No" (false).
+			Muestra el valor de open_basedir, que limita el acceso a directorios en PHP.
+			Se usa phpsetting.string para mostrar texto de manera segura.
+			Muestra si la extensión zlib está activada.
+			Usa phpsetting.set, que determina si está instalada o no.
+			-->
+
 		<tbody>
 			<tr>
 				<td>
