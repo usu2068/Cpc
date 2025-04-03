@@ -1,4 +1,4 @@
-/* Smooth scrolling para anclas */  
+/* Smooth scrolling para anclas - archivos js de estilos de la pagina no requieren documentacion especial */   
 $(document).on('click','a.smooth', function(e){
     e.preventDefault();
     var $link = $(this);
