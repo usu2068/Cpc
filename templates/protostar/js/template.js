@@ -10,17 +10,25 @@
 {
 	$(document).ready(function()
 	{
+		// Activa los tooltips en todos los elementos con el atributo 'rel=tooltip'
 		$('*[rel=tooltip]').tooltip()
 
 		// Turn radios into btn-group
+		 // Convierte los botones de radio en un grupo de botones estilizado
 		$('.radio.btn-group label').addClass('btn');
+
+		// Evento de clic en las etiquetas de los botones de radio dentro de un grupo de botones
 		$(".btn-group label:not(.active)").click(function()
 		{
 			var label = $(this);
 			var input = $('#' + label.attr('for'));
 
+			// Si el input no está seleccionado, actualiza la apariencia del grupo de botones
 			if (!input.prop('checked')) {
+				// Elimina clases activas previas en el grupo
 				label.closest('.btn-group').find("label").removeClass('active btn-success btn-danger btn-primary');
+
+				// Agrega la clase activa y cambia el color según el valor del input
 				if (input.val() == '') {
 					label.addClass('active btn-primary');
 				} else if (input.val() == 0) {
@@ -28,9 +36,12 @@
 				} else {
 					label.addClass('active btn-success');
 				}
-				input.prop('checked', true);
+				// Marca el input como seleccionado
+				input.prop('checked', true);s
 			}
 		});
+
+		// Aplica las clases correctas a los botones activos al cargar la página
 		$(".btn-group input[checked=checked]").each(function()
 		{
 			if ($(this).val() == '') {

@@ -7,8 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+ // Evita el acceso directo al archivo
 defined('_JEXEC') or die;
 
+// Obtiene instancias de la aplicación, documento y usuario
 $app             = JFactory::getApplication();
 $doc             = JFactory::getDocument();
 $user            = JFactory::getUser();
@@ -16,9 +18,11 @@ $this->language  = $doc->language;
 $this->direction = $doc->direction;
 
 // Getting params from template
+// Obtiene los parámetros de la plantilla
 $params = $app->getTemplate(true)->params;
 
 // Detecting Active Variables
+// Detecta variables activas en la URL
 $option   = $app->input->getCmd('option', '');
 $view     = $app->input->getCmd('view', '');
 $layout   = $app->input->getCmd('layout', '');
@@ -26,6 +30,7 @@ $task     = $app->input->getCmd('task', '');
 $itemid   = $app->input->getCmd('Itemid', '');
 $sitename = $app->get('sitename');
 
+// Determina si la vista debe ocupar el ancho completo
 if($task == "edit" || $layout == "form" )
 {
 	$fullWidth = 1;
@@ -36,9 +41,11 @@ else
 }
 
 // Add JavaScript Frameworks
+//usa estilos desde javascript
 JHtml::_('bootstrap.framework');
 
 // Logo file or site title param
+// Configura el logo o título del sitio
 if ($params->get('logoFile'))
 {
 	$logo = '<img src="' . JUri::root() . $params->get('logoFile') . '" alt="' . $sitename . '" />';
@@ -59,6 +66,8 @@ else
 	<title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage()); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<?php // Use of Google Font ?>
+
+<!--Carga la fuente de Google si está configurada-->
 	<?php if ($params->get('googleFont')) : ?>
 		<link href='//fonts.googleapis.com/css?family=<?php echo $params->get('googleFontName'); ?>' rel='stylesheet' type='text/css' />
 		<style type="text/css">
@@ -68,11 +77,15 @@ else
 		</style>
 	<?php endif; ?>
 	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
+
+	<!--Carga estilos de depuración si está activado el modo debug-->
 		<?php $debug = JFactory::getConfig()->get('debug_lang'); ?>
 		<?php if ((defined('JDEBUG') && JDEBUG) || $debug) : ?>
 			<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/media/cms/css/debug.css" type="text/css" />
 		<?php endif; ?>
 	<?php // If Right-to-Left ?>
+
+	<!--Carga estilos específicos para RTL si el idioma es de derecha a izquierda-->
 	<?php if ($this->direction == 'rtl') : ?>
 		<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/media/jui/css/bootstrap-rtl.css" type="text/css" />
 	<?php endif; ?>

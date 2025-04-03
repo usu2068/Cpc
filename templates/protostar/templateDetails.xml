@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/2.5/template-install.dtd">
+
+<!-- Archivo de instalación de la plantilla "Protostar" para Joomla -->
 <extension version="3.1" type="template" client="site">
+
+<!-- Información de la plantilla -->
 	<name>protostar</name>
 	<version>1.0</version>
 	<creationDate>4/30/2012</creationDate>
@@ -8,6 +12,8 @@
 	<authorEmail>admin@joomla.org</authorEmail>
 	<copyright>Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.</copyright>
 	<description>TPL_PROTOSTAR_XML_DESCRIPTION</description>
+
+	<!-- Archivos y carpetas incluidos en la plantilla -->
 	<files>
 		<filename>component.php</filename>
 		<filename>error.php</filename>
@@ -24,6 +30,8 @@
 		<folder>language</folder>
 		<folder>less</folder>
 	</files>
+
+	<!-- Definición de posiciones disponibles en la plantilla -->
 	<positions>
 		<position>banner</position>
 		<position>debug</position>
@@ -44,35 +52,46 @@
 		<position>position-14</position>
 		<position>footer</position>
 	</positions>
+
+	<!-- Archivos de idioma de la plantilla -->
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.tpl_protostar.ini</language>
 		<language tag="en-GB">en-GB/en-GB.tpl_protostar.sys.ini</language>
 	</languages>
+
+	<!-- Configuración de parámetros de la plantilla -->
 	<config>
 		<fields name="params">
 			<fieldset name="advanced">
+
+			<!-- Color de la plantilla -->
 				<field name="templateColor" class="" type="color" default="#08C"
 					label="TPL_PROTOSTAR_COLOR_LABEL"
 					description="TPL_PROTOSTAR_COLOR_DESC" />
 
+				<!-- Color de fondo de la plantilla -->
 				<field name="templateBackgroundColor" class="" type="color" default="#F4F6F7"
 					label="TPL_PROTOSTAR_BACKGROUND_COLOR_LABEL"
 					description="TPL_PROTOSTAR_BACKGROUND_COLOR_DESC" />
 
+				<!-- Logo personalizado -->
 				<field name="logoFile" class="" type="media" default=""
 					label="TPL_PROTOSTAR_LOGO_LABEL"
 					description="TPL_PROTOSTAR_LOGO_DESC" />
 					
+					<!-- Título del sitio -->
 				<field name="sitetitle"  type="text" default=""
 					label="JGLOBAL_TITLE"
 					description="JFIELD_ALT_PAGE_TITLE_LABEL"
 					filter="string" />
 
+				<!-- Descripción del sitio -->
 				<field name="sitedescription"  type="text" default=""
 					label="JGLOBAL_DESCRIPTION"
 					description="JGLOBAL_SUBHEADING_DESC"
 					filter="string" />
 
+				<!-- Uso de fuentes de Google -->
 				<field name="googleFont"
 					type="radio"
 					class="btn-group btn-group-yesno"
@@ -84,10 +103,12 @@
 					<option value="0">JNO</option>
 				</field>
 
+				<!-- Nombre de la fuente de Google -->
 				<field name="googleFontName" class="" type="text" default="Open+Sans"
 					label="TPL_PROTOSTAR_FONT_NAME_LABEL"
 					description="TPL_PROTOSTAR_FONT_NAME_DESC" />
 
+				<!-- Configuración de contenedor fluido o estático -->
 				<field name="fluidContainer"
 					type="radio"
 					class="btn-group btn-group-yesno"

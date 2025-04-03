@@ -1,16 +1,21 @@
 <?php
+// Incluir archivos necesarios para la conexión a la base de datos y la generación de HTML
 include_once('/home/aplicati/public_html/utlr/templates/class/conectarse.php');
 include_once('/home/aplicati/public_html/utlr/templates/class/html.php');
 
+// Conectar a la base de datos
 $link = conectarse();
 mysql_select_db("aplicati_FIC",$link);
 
+// Restringir acceso directo al archivo
 defined('_JEXEC') or die;
 
+// Crear instancias de la clase "body" para manejar la estructura del sitio
 $cuerpo = new body();
 $head = $cuerpo -> header($this->template);
 $footer = $cuerpo -> footer($this->template);
 
+// Obtener objetos de Joomla
 $app             = JFactory::getApplication();
 $doc             = JFactory::getDocument();
 $user            = JFactory::getUser();
@@ -18,9 +23,11 @@ $this->language  = $doc->language;
 $this->direction = $doc->direction;
 
 // Getting params from template
+// Obtener parámetros de la plantilla
 $params = $app->getTemplate(true)->params;
 
 // Detecting Active Variables
+// Detectar variables activas en la URL
 $option   = $app->input->getCmd('option', '');
 $view     = $app->input->getCmd('view', '');
 $layout   = $app->input->getCmd('layout', '');
@@ -28,6 +35,7 @@ $task     = $app->input->getCmd('task', '');
 $itemid   = $app->input->getCmd('Itemid', '');
 $sitename = $app->get('sitename');
 
+// Determinar si se debe usar ancho completo
 if($task == "edit" || $layout == "form" )
 {
 	$fullWidth = 1;
@@ -48,6 +56,7 @@ $doc->addStyleSheet('templates/' . $this->template . '/css/template.css');*/
 JHtml::_('bootstrap.loadCss', false, $this->direction);
 
 // Adjusting content width
+// Ajustar el ancho del contenido dependiendo de los módulos activos
 if ($this->countModules('position-7') && $this->countModules('position-8'))
 {
 	$span = "span6";
@@ -66,6 +75,7 @@ else
 }
 
 // Logo file or site title param
+// Definir el logo del sitio según configuración
 if ($this->params->get('logoFile'))
 {
 	$logo = '<img src="' . JUri::root() . $this->params->get('logoFile') . '" alt="' . $sitename . '" />';
@@ -79,11 +89,14 @@ else
 	$logo = '<span class="site-title" title="' . $sitename . '">' . $sitename . '</span>';
 }
 
+// Mostrar encabezado de la página
 echo $head;
 ?>
+<!-- Sección del carrusel -->
         <section class="carousel-section">
             <div id="carousel-example-generic" class="carousel carousel-razon slide" data-ride="carousel" data-interval="5000">
                 <!-- Indicators -->
+                 <!-- Indicadores -->
                 <ol class="carousel-indicators">
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
@@ -91,6 +104,7 @@ echo $head;
                 </ol>
 
                 <!-- Wrapper for slides -->
+                 <!-- Contenido del carrusel -->
                 <div class="carousel-inner">
 				
                     <div class="item active">
@@ -240,6 +254,7 @@ echo $head;
             </div>
         </section>
 		
+        <!-- Sección de publicaciones -->
 		<section class="margin-bottom">
 			<div class="container">
                 <div class="row">
@@ -252,6 +267,7 @@ echo $head;
 					
 					<ul class="bxslider" id="latest-works">
 						<?php 
+                        // Consultar publicaciones en la base de datos
 							$sql_pub = "SELECT * 
 										FROM `jo33_FIC_content` 
 										WHERE 
@@ -284,6 +300,7 @@ echo $head;
 					?>	
 
 					<!-- Modal -->
+                     <!-- modal que muestra informacion detallada sobre una publicacion cuando el usuario hace clic en "mas info" en la seccion de publicaciones -->
 					<div class="modal fade bs-example-modal-lg" id="modal_pub_<?php echo $row_pub[0]?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog modal-lg">
 						<div class="modal-content">
@@ -304,5 +321,6 @@ echo $head;
 			</div>			
 	   </section>		
 <?php 
+// Mostrar pie de página
 	echo $footer;
 ?>	   

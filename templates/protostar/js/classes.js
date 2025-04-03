@@ -1,6 +1,8 @@
 // Add classes
 
+// Se ejecuta cuando la página ha terminado de cargar
 window.onload=function() {
+    // Selecciona todos los elementos <input> y reemplaza la clase 'button' por 'btn btn-primary'
 var input = document.getElementsByTagName("input");
 for (var i = 0; i < input.length; i++) {
     if (input[i].className == 'button') {

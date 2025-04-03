@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 /**
  * This is a file to add template specific chrome to pagination rendering.
+ * Archivo para añadir una plantilla especifica orientada a la paginación 
  *
  * pagination_list_footer
  * 	Input variable $list is an array with offsets:
@@ -55,12 +56,15 @@ defined('_JEXEC') or die;
  * 		$item->text	: string
  *
  * This gives template designers ultimate control over how pagination is rendered.
+ * Esto da a los diseñadores de plantillas el control final sobre como se muestra la paginacion
  *
  * NOTE: If you override pagination_item_active OR pagination_item_inactive you MUST override them both
+ * NOTA: en caso de querer anular alguno de estos metodos, pagination_item_active, pagination_item_inactive, se DEBEN inactivar ambos.
  */
 
 /**
  * Renders the pagination footer
+ * Muestra el pie de pagina
  *
  * @param   array   $list  Array containing pagination footer
  *
@@ -80,8 +84,9 @@ function pagination_list_footer($list)
 
 /**
  * Renders the pagination list
+ * Muestra la lista de paginación
  *
- * @param   array   $list  Array containing pagination information
+ * @param   array   $list  Array containing pagination information, array que contiene la informacion de la paginacion 
  *
  * @return  string         HTML markup for the full pagination object
  *
@@ -90,6 +95,7 @@ function pagination_list_footer($list)
 function pagination_list_render($list)
 {
 	// Calculate to display range of pages
+	// Se calcula el rango de paginas a mostrar
 	$currentPage = 1;
 	$range = 1;
 	$step = 5;
@@ -138,8 +144,9 @@ function pagination_list_render($list)
 
 /**
  * Renders an active item in the pagination block
+ * Muestra un elemento activo en el bloque de paginacion
  *
- * @param   JPaginationObject  $item  The current pagination object
+ * @param   JPaginationObject  $item  The current pagination object, objeto actual de la paginacion 
  *
  * @return  string                    HTML markup for active item
  *
@@ -150,30 +157,35 @@ function pagination_item_active(&$item)
 	$class = '';
 
 	// Check for "Start" item
+	// Comprobar el elemento inicial
 	if ($item->text == JText::_('JLIB_HTML_START'))
 	{
 		$display = '<i class="icon-first"></i>';
 	}
 
 	// Check for "Prev" item
+	//Comprobar el elemento anterior
 	if ($item->text == JText::_('JPREV'))
 	{
 		$display = '<i class="icon-previous"></i>';
 	}
 
 	// Check for "Next" item
+	//Comprobar el siguiente elemento
 	if ($item->text == JText::_('JNEXT'))
 	{
 		$display = '<i class="icon-next"></i>';
 	}
 
 	// Check for "End" item
+	//Comprobar el elemento final
 	if ($item->text == JText::_('JLIB_HTML_END'))
 	{
 		$display = '<i class="icon-last"></i>';
 	}
 
 	// If the display object isn't set already, just render the item with its text
+	// Si el objeto de visualizacion aun no se ha establecido, solo hay que representar el elemento con su texto
 	if (!isset($display))
 	{
 		$display = $item->text;
@@ -185,6 +197,7 @@ function pagination_item_active(&$item)
 
 /**
  * Renders an inactive item in the pagination block
+ * Muestra un e lemnto inactivo en el bloque de paginacion 
  *
  * @param   JPaginationObject  $item  The current pagination object
  *
@@ -195,35 +208,41 @@ function pagination_item_active(&$item)
 function pagination_item_inactive(&$item)
 {
 	// Check for "Start" item
+	// Comprobar el elemento inicial
 	if ($item->text == JText::_('JLIB_HTML_START'))
 	{
 		return '<li class="disabled"><a><i class="icon-first"></i></a></li>';
 	}
 
 	// Check for "Prev" item
+	//Comprobar el elemento anterior
 	if ($item->text == JText::_('JPREV'))
 	{
 		return '<li class="disabled"><a><i class="icon-previous"></i></a></li>';
 	}
 
 	// Check for "Next" item
+	//Comprobar el siguiente elemento
 	if ($item->text == JText::_('JNEXT'))
 	{
 		return '<li class="disabled"><a><i class="icon-next"></i></a></li>';
 	}
 
 	// Check for "End" item
+	//Comprobar el elemento final
 	if ($item->text == JText::_('JLIB_HTML_END'))
 	{
 		return '<li class="disabled"><a><i class="icon-last"></i></a></li>';
 	}
 
 	// Check if the item is the active page
+	// Verifica si el elemento es la pagina activa
 	if (isset($item->active) && ($item->active))
 	{
 		return '<li class="active hidden-phone"><a>' . $item->text . '</a></li>';
 	}
 
 	// Doesn't match any other condition, render a normal item
+	// No coincide con ninguna otra condicion, renderiza un articulo normal
 	return '<li class="disabled hidden-phone"><a>' . $item->text . '</a></li>';
 }

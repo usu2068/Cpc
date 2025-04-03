@@ -1,16 +1,20 @@
 <?php
+// Incluir archivos de conexión y HTML
 include_once('/home/aplicati/public_html/utlr/templates/class/conectarse.php');
 include_once('/home/aplicati/public_html/utlr/templates/class/html.php');
 
+// Conectar a la base de datos
 $link = conectarse();
 mysql_select_db("aplicati_FIC",$link);
 
 defined('_JEXEC') or die;
 
+// Inicializar la estructura del cuerpo del sitio
 $cuerpo = new body();
 $head = $cuerpo -> header($this->template);
 $footer = $cuerpo -> footer($this->template);
 
+// Obtener instancias de Joomla
 $app             = JFactory::getApplication();
 $doc             = JFactory::getDocument();
 $user            = JFactory::getUser();
@@ -18,9 +22,11 @@ $this->language  = $doc->language;
 $this->direction = $doc->direction;
 
 // Getting params from template
+// Obtener parámetros de la plantilla
 $params = $app->getTemplate(true)->params;
 
 // Detecting Active Variables
+// Detectar variables activas en la URL
 $option   = $app->input->getCmd('option', '');
 $view     = $app->input->getCmd('view', '');
 $layout   = $app->input->getCmd('layout', '');
@@ -28,6 +34,7 @@ $task     = $app->input->getCmd('task', '');
 $itemid   = $app->input->getCmd('Itemid', '');
 $sitename = $app->get('sitename');
 
+// Determinar si la página debe mostrarse en ancho completo
 if($task == "edit" || $layout == "form" )
 {
 	$fullWidth = 1;
@@ -45,9 +52,11 @@ $doc->addScript('templates/' . $this->template . '/js/template.js');
 $doc->addStyleSheet('templates/' . $this->template . '/css/template.css');*/
 
 // Load optional RTL Bootstrap CSS
+// Cargar CSS según la disposición RTL o LTR
 JHtml::_('bootstrap.loadCss', false, $this->direction);
 
 // Adjusting content width
+// Ajustar el ancho del contenido según los módulos activos
 if ($this->countModules('position-7') && $this->countModules('position-8'))
 {
 	$span = "span6";
@@ -84,6 +93,7 @@ echo $head;
         <section class="carousel-section">
             <div id="carousel-example-generic" class="carousel carousel-razon slide" data-ride="carousel" data-interval="5000">
                 <!-- Indicators -->
+                 <!-- Indicadores -->
                 <ol class="carousel-indicators">
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
@@ -91,6 +101,7 @@ echo $head;
                 </ol>
 
                 <!-- Wrapper for slides -->
+                  <!-- contenido del carrousel -->
                 <div class="carousel-inner">
 				
                     <div class="item active">
@@ -174,6 +185,7 @@ echo $head;
                 </div>
 
                 <!-- Controls -->
+                 <!-- controles -->
                 <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
@@ -183,12 +195,14 @@ echo $head;
             </div>
         </section> <!-- carousel -->
 
+
         <section class="section-lines">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="home-devices">
 							<?php 
+                            // Consulta para obtener los datos de la sección
 								$sql_dec = "SELECT * 
 										FROM
 											`jo33_FIC_content`,
