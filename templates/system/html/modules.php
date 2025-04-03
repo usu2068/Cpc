@@ -7,6 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+ // Evita el acceso directo al archivo para mayor seguridad.
 defined('_JEXEC') or die;
 
 /*
@@ -22,12 +23,13 @@ function modChrome_none($module, &$params, &$attribs)
  */
 function modChrome_html5($module, &$params, &$attribs)
 {
-	$moduleTag      = $params->get('module_tag', 'div');
-	$headerTag      = htmlspecialchars($params->get('header_tag', 'h3'));
-	$bootstrapSize  = (int) $params->get('bootstrap_size', 0);
+	$moduleTag      = $params->get('module_tag', 'div'); //Define la etique HTML a usar para el modulo
+	$headerTag      = htmlspecialchars($params->get('header_tag', 'h3')); //Define la etiqueta HTML para el titulo del módulo
+	$bootstrapSize  = (int) $params->get('bootstrap_size', 0); //define el tamaño de bootstrap
 	$moduleClass    = $bootstrapSize != 0 ? ' span' . $bootstrapSize : '';
 
 	// Temporarily store header class in variable
+	//obtiene la clase CSS para el titulo del modulo
 	$headerClass	= $params->get('header_class');
 	$headerClass	= !empty($headerClass) ? ' class="' . htmlspecialchars($headerClass) . '"' : '';
 
@@ -47,6 +49,7 @@ function modChrome_html5($module, &$params, &$attribs)
 
 /*
  * Module chrome that wraps the module in a table
+ * Renderiza el modulo dentro de una tabla HTML
  */
 function modChrome_table($module, &$params, &$attribs)
 { ?>
@@ -69,6 +72,7 @@ function modChrome_table($module, &$params, &$attribs)
 
 /*
  * Module chrome that wraps the tabled module output in a <td> tag of another table
+ * Renderiza el modulo dentro de una tabla con una estructura adicional
  */
 function modChrome_horz($module, &$params, &$attribs)
 { ?>
@@ -99,6 +103,7 @@ function modChrome_xhtml($module, &$params, &$attribs)
 
 /*
  * Module chrome that allows for rounded corners by wrapping in nested div tags
+ * Renderiza el modulo dentro de varios <div>, simulando esquinas redondeadas con css
  */
 function modChrome_rounded($module, &$params, &$attribs)
 { ?>
@@ -119,10 +124,13 @@ function modChrome_rounded($module, &$params, &$attribs)
 
 /*
  * Module chrome that add preview information to the module
+ * Renderiiza el modulo mostrando informacion de depuracion, como la posicion y el estilo del modulo
  */
 function modChrome_outline($module, &$params, &$attribs)
 {
 	static $css = false;
+
+	//agrega estilos css para la vista de depuracion
 	if (!$css)
 	{
 		$css = true;
@@ -140,3 +148,7 @@ function modChrome_outline($module, &$params, &$attribs)
 	</div>
 	<?php
 }
+
+/**
+ * Este codigo define diferentes formas de renderizar los modulos en joomla, lo que permite personalizar su apariencia y estructura.
+ */
