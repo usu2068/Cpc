@@ -1,4 +1,11 @@
 <?php
+/**Genera un PDF personalizado que muestra politicas de inversion, usando la libreria FPDF (libreria ampliamente usada para crear archivos PDF en PHP)
+ * 
+ * Genera reportes automaticos en PDF con tablas y diseños personalizados.
+ * Muestra informacion financiera o de inversiones de forma visualmente organizada
+ * Incluye logotipos e identidades visuales de distintas entidades
+ * Podria ser usado en un sistema web donde un usuario descarga su "politicas de inversion" desde una plataforma.
+ */
 require('pdf/fpdf.php');
  
 class PDF extends FPDF{

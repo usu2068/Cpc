@@ -1,6 +1,8 @@
 <?php
 /**
  * HTML2PDF Librairy - parsingCss class
+ * 
+ * Archivo de configuracion que da los estilos en cuanto a tamaño de letra, color y demas objetos en el PDF que se genera en el sistema.
  *
  * HTML => PDF convertor
  * distributed under the LGPL License

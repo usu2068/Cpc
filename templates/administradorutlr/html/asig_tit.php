@@ -39,3 +39,24 @@ function asignacion_tit(){
 	//echo 'hola';
 }
 ?>
+
+<!--
+Lógica según el tipo (tip):
+Si tip == 0 (asignación a política):
+Tabla: jo33_FIC_UTLR_titulos_X_titulos_pol_tip
+
+Columnas: id_titulos, id_titulos_pol_tip, active
+
+Si tip == 1 (asignación a fondo):
+Tabla: jo33_FIC_UTLR_titulos_has_jo33_FIC_UTLR_titulos_pol_fon
+
+Columnas: jo33_FIC_UTLR_titulos_id, jo33_FIC_UTLR_titulos_pol_fon_id, active
+
+Este archivo permite:
+
+Asignar un título a un tipo de grupo (tipo de política o fondo).
+
+Guardar esa relación en la base de datos.
+
+Consultar y mostrar la lista de títulos ya asignados al grupo.
+-->

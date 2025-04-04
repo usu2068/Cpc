@@ -1,5 +1,12 @@
 <?php 
 
+/**genera dinamicamente una tabla HTML con informacion de una base de datos, y en funcion del tipo (_E o U) muestra:
+ * Entidades con opciones para editar o eliminar (tip == 'E')
+ * Usuarios asociados a cada ntidad (tip == 'U')
+ * 
+ * Carga el archivo donde se realizan las consultas SQL, y el que contiene el diseño del formulario
+ */
+
 	include_once('consultas.php');
 	include_once('form.php');
 

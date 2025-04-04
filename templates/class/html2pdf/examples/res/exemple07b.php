@@ -1,3 +1,4 @@
+<!--ejemplos de plantillas que pueden ser usadas para convertir a archivos PDF-->
 <page orientation="paysage" >
     <bookmark title="Document" level="0" ></bookmark>
     <a name="document_reprise"></a>

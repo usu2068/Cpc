@@ -23,6 +23,13 @@
 #
 # Obviously, since this code is in the public domain, the above are not
 # requirements (there can be none), but merely suggestions.
+
+#sistema de encriptacion (hashing) de contraseñas que permite, generar hashes seguros y portables de contraseñas, verifica si una contraseña ingresada coincide con un hash previamente generado
+#asegura que los hashes tengan una entropia adecuada y usen salting (para evitar ataques con diccionario/rainbow tables).
+
+#este archivo se puede usar en otros sitios sin afectar su funcionamiento inicial
+# se pueden guardar contraseña de usuarios en la base de datos en forma hash segura,
+# compara contraseñas ingresadas por los usuarios contra los hashes almacenados.
 #
 class PasswordHash {
 	var $itoa64;

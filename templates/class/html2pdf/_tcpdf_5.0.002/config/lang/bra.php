@@ -21,6 +21,11 @@
 
 /**
  * TCPDF language file (contains translated texts).
+ * Archivo de idioma para TCPDF (contiene textos traducidos).
+ * 
+ * Este archivo define traducciones de textos usados por la biblioteca TCPDF,
+ * permitiendo la personalización del idioma de los documentos PDF generados.
+ * 
  * @package com.tecnick.tcpdf
  * @abstract TCPDF language file.
  * @author Nicola Asuni
@@ -32,16 +37,40 @@
  
 // ENGLISH
 
+// Variable global que contiene los textos traducidos
 global $l;
 $l = Array();
 
 // PAGE META DESCRIPTORS --------------------------------------
+// METADATOS DE LA PÁGINA --------------------------------------
 
+/**
+ * Conjunto de caracteres utilizado (codificación)
+ * UTF-8 es compatible con la mayoría de los idiomas.
+ */
 $l['a_meta_charset'] = 'UTF-8';
+
+/**
+ * Dirección del texto: 'ltr' (left-to-right / izquierda a derecha).
+ * Útil para idiomas como inglés, español, francés, etc.
+ * Para idiomas como árabe o hebreo se usaría 'rtl'.
+ */
 $l['a_meta_dir'] = 'ltr';
+
+/**
+ * Código de idioma utilizado en el documento.
+ * Aunque el archivo es "eng" (inglés), aquí está configurado como 'pt' (portugués),
+ * lo cual podría ser un error o una configuración personalizada.
+ */
 $l['a_meta_language'] = 'pt';
 
 // TRANSLATIONS --------------------------------------
+// TRADUCCIONES DE TEXTO --------------------------------------
+
+/**
+ * Traducción de la palabra "página".
+ * Esta palabra se usará en los números de página, encabezados o pies de página.
+ */
 $l['w_page'] = 'página';
 
 //============================================================+

@@ -1,3 +1,4 @@
+<!--ejemplos de plantillas que pueden ser usadas para convertir a archivos PDF-->
 <style type="text/css">
 <!--
 table

@@ -1,3 +1,4 @@
+<!--Plantilla diseñada para ser convertida a PDF usando la libreria HTML2PDF en PHP-->
 <style type="text/css">
 <!--
     table.page_header {width: 100%; border: none; background-color: #DDDDFF; border-bottom: solid 1mm #AAAADD; padding: 2mm }

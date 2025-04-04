@@ -1,4 +1,5 @@
 <?php 
+/**Archivo que genera dinamicamente el encabezado (header) y el pie de pagina (footer) en HTML */
 class body{
 	
 	public function header($template, $r_font){

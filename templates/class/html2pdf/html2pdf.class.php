@@ -3,6 +3,7 @@
  * HTML2PDF Librairy - main class
  *
  * HTML => PDF convertor
+ * Conversion de archivos pdf
  * distributed under the LGPL License
  *
  * @author  Laurent MINGUET <webmaster@html2pdf.fr>

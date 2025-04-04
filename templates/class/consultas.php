@@ -1,5 +1,6 @@
-<?php
 
+<?php
+/*Clase personalizada que contiene funciones para interactuar con una base de datos MySQL*/ 
 include('conectarse.php');
 	
 class mysql{

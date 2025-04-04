@@ -1,3 +1,4 @@
+<!--ejemplos de plantillas que pueden ser usadas para convertir a archivos PDF-->
 <?php
 $content = 'A Test overflow<br>A Test overflow<br>A Test overflow<br>
 <img src="./res/logo.gif" alt="logo" style="width: XXXmm"><br>

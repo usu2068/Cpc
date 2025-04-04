@@ -4,29 +4,33 @@
  *
  * HTML => PDF convertor
  * distributed under the LGPL License
- *
+ * 
+ * Maneja exdepciones para la libreria HTML PDF
+ * Captura eerores especificios relacionados con la conversion de HTML a PDF y proporciona mensajes detallados sobre la causa del error
  * @author    Laurent MINGUET <webmaster@html2pdf.fr>
  * @version   4.03
  */
 
 class HTML2PDF_exception extends exception
 {
-    protected $_tag = null;
-    protected $_html = null;
-    protected $_other = null;
-    protected $_image = null;
-    protected $_messageHtml = '';
+    protected $_tag = null; //etiqueta HTML que causo el error
+    protected $_html = null; //codigo HTML relacionado con el error
+    protected $_other = null; //informacion adicional sonbre el error
+    protected $_image = null; // fuente de imagen en caso de error de carga
+    protected $_messageHtml = ''; // mensaje de error en formato html
 
     /**
      * generate a HTML2PDF exception
-     *
-     * @param    int     $err error number
-     * @param    mixed   $other additionnal informations
-     * @return   string  $html optionnal code HTML associated to the error
+     * Constructor de la excepcion HTML2PDF
+     * 
+     * @param    int     $err error number - codigo de error especifico
+     * @param    mixed   $other additionnal informations - informacion adicional sobre el error
+     * @return   string  $html optionnal code HTML associated to the error - codigo HTML opcional asociado al error
      */
     final public function __construct($err = 0, $other = null, $html = '')
     {
         // read the error
+        //determinar el mensaje de error segun el codigo recibido
         switch($err)
         {
             case 1: // Unsupported tag
@@ -88,6 +92,7 @@ class HTML2PDF_exception extends exception
         }
 
         // create the HTML message
+        //crear mensaje de error en HTML
         $this->_messageHtml = '<span style="color: #AA0000; font-weight: bold;">'.HTML2PDF_locale::get('txt01', 'error: ').$err.'</span><br>';
         $this->_messageHtml.= HTML2PDF_locale::get('txt02', 'file:').' '.$this->file.'<br>';
         $this->_messageHtml.= HTML2PDF_locale::get('txt03', 'line:').' '.$this->line.'<br>';
@@ -95,9 +100,11 @@ class HTML2PDF_exception extends exception
         $this->_messageHtml.= $msg;
 
         // create the text message
+        //crear mensaje de error en texto
         $msg = HTML2PDF_locale::get('txt01', 'error: ').$err.' : '.strip_tags($msg);
 
         // add the optionnal html content
+        //agregar codigo HTML opcional al mensaje
         if ($html) {
             $this->_messageHtml.= "<br><br>HTML : ...".trim(htmlentities($html)).'...';
             $this->_html = $html;
@@ -105,17 +112,20 @@ class HTML2PDF_exception extends exception
         }
 
         // save the other informations
+        //almacenar informacion adicional
         $this->_other = $other;
 
         // construct the exception
+        //construir la excepcion
         parent::__construct($msg, $err);
     }
 
     /**
      * get the message as string
+     * obtiene el mensaje de error en formato HTML
      *
      * @access public
-     * @return string $messageHtml
+     * @return string $messageHtml - mensaje en HTML
      */
     public function __toString()
     {
@@ -124,6 +134,7 @@ class HTML2PDF_exception extends exception
 
     /**
      * get the html tag name
+     * obtiene la etiqueta HTML asociada al error
      *
      * @access public
      * @return string $tagName
@@ -135,6 +146,7 @@ class HTML2PDF_exception extends exception
 
     /**
      * get the optional html code
+     * obtiene el codigo HTML opcional relacionado con el error
      *
      * @access public
      * @return string $html
@@ -146,6 +158,7 @@ class HTML2PDF_exception extends exception
 
     /**
      * get the optional other informations
+     * obtiene informacion adicional sobre el error
      *
      * @access public
      * @return mixed $other
@@ -157,6 +170,7 @@ class HTML2PDF_exception extends exception
 
     /**
      * get the image source
+     * Obtiene la fuente de la imagen en caso de error de carga
      *
      * @access public
      * @return string $imageSrc

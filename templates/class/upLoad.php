@@ -1,7 +1,7 @@
 <?php
 include_once('consultas.php');
 include_once('html.php');
-
+//Carga de documentos
 /*
 	*
 	*

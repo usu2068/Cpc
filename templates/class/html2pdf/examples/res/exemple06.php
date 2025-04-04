@@ -1,3 +1,4 @@
+<!--ejemplos de plantillas que pueden ser usadas para convertir a archivos PDF-->
 <link type="text/css" href="./res/exemple06.css" rel="stylesheet" >
 <style type="text/css">
 <!--

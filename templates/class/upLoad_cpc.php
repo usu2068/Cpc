@@ -1,4 +1,5 @@
 <?php
+//Carga de documentos
 include_once('consultas.php');
 include_once('html.php');
 

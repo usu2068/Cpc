@@ -1,4 +1,20 @@
 <?php
+/**
+ * Recibe un archivo CSV (que contiene datos de depositos de una entidad financiera), almacenarlo, procesar su informacion, analizar los emisores y generar una salida que probablemente
+ * se visualiza en una interfaz de administrador.
+ * 
+ * Función general del archivo
+ * Carga y procesamiento de un archivo CSV de depósitos de una entidad (posiblemente financiera o institucional), para realizar análisis y mostrar resultados al usuario.
+ * 
+ * En resumen
+ * Elemento	Descripción
+ * 📁 Entrada esperada	Archivo .csv de depósitos (arch_dep)
+ * 📌 Parámetros esperados	ID de entidad, nombre de archivo, fecha de depósito
+ * 💾 Acción principal	Guardar el archivo en el servidor
+ * 🗃️ Base de datos	Actualiza ubicación del archivo para la entidad
+ * 🧠 Procesamiento	Extrae emisores, hace análisis financiero del contenido
+ * 📤 Salida	Resultado del análisis (en pantalla), con posibilidad de visualización o generación posterior de PDF (aunque está deshabilitada en el código actual)
+ */
 include_once('consultas.php');
 include_once('html.php');
 //include_once('pdf.php');

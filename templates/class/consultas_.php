@@ -1,5 +1,40 @@
 <?php
 
+/*
+Clase personalizada que contiene funciones para interactuar con una base de datos MySQL
+
+📌 sql($tip, $table, $val, $valC, $valU)
+Realiza consultas SQL dinámicas según el tipo ($tip) recibido:
+
+'S': SELECT
+
+'I': INSERT
+
+'IP': INSERT Múltiple (por lotes)
+
+'U': UPDATE
+
+🔍 Detalles:
+
+$tip: Tipo de operación (S, I, IP, U)
+
+$table: Tabla o tablas a usar (array)
+
+$val: Valores proporcionados por el usuario
+
+$valC: Columnas de la tabla
+
+$valU: Condiciones de WHERE u ORDER BY
+
+Ejemplos:
+'S': Crea un SELECT con condiciones en WHERE.
+
+'I': Inserta un solo registro.
+
+'IP': Inserta múltiples filas al mismo tiempo.
+
+'U': Actualiza registros con condiciones.
+*/
 include('conectarse.php');
 	
 class mysql{

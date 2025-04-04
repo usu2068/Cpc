@@ -1,3 +1,4 @@
+<!--Archivo de conexion a la BB.DD-->
 <?php
 
 	function conectarse(){

@@ -1,5 +1,7 @@
 <?php
 //============================================================+
+//Archivo principal de configuracion para la libreria TCPDF, define una serie de constantes que controlan el comportamiento y la apariencia de los documentos PDF generados con TCPDF
+//
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
 // Last Update : 2009-09-30

@@ -1,5 +1,12 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <?php
+/**Genera un reporte en CSV de ventas, filtrado por un rango de fechas y tipo de factura.
+ * Recibe un rango de fechas y tipo de factura desde un formulario
+ * consulta la base de datos
+ * Crea un archivo CSV con la informacion de facturas y ventas
+ * Calcula totales facturados y recibidos
+ * Ofrece un enlace para descargar el reporte (si se mueve correctamente el archivo a la carpeta esperada)
+ */
 /* 
 ob_end_clean(); 
 session_start();

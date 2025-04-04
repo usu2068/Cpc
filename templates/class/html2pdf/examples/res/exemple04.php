@@ -1,3 +1,4 @@
+<!--ejemplos de plantillas que pueden ser usadas para convertir a archivos PDF-->
 <style type="text/css">
 <!--
 div.special { margin: auto; width:95%; border:1px solid #000000; padding: 2px; }

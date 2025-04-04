@@ -1,6 +1,7 @@
 <?php
 /**
  * HTML2PDF Librairy - parsingHtml class
+ * Permite la conversion de documentos HTML a PDF, recibe el codigo HTML, procesa el archivo para luego convertirlo en un archivo de ODF
  *
  * HTML => PDF convertor
  * distributed under the LGPL License

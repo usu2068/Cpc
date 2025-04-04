@@ -1,5 +1,8 @@
 <?php
 //============================================================+
+//archivo de configuracion alternativo para la biblioteca TCPDF, define constantes y parametros necesarios para el funcionamiento de TCPDF, como rutas de instalacion,
+// directorios de fuentes, cache e imagenes, margenes, formatos de pagina
+//metadatos del docuemtno, comportamiento del motor PDF
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
 // Last Update : 2010-04-28

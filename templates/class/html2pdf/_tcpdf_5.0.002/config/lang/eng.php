@@ -39,6 +39,11 @@ $l = Array();
 
 $l['a_meta_charset'] = 'UTF-8';
 $l['a_meta_dir'] = 'ltr';
+/**
+ * Código de idioma utilizado en el documento.
+ * Aunque el archivo es "eng" (inglés), aquí está configurado como 'pt' (inglés),
+ * lo cual podría ser un error o una configuración personalizada.
+ */
 $l['a_meta_language'] = 'en';
 
 // TRANSLATIONS --------------------------------------

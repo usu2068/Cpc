@@ -1,5 +1,17 @@
 <?php
 /**
+ * 
+ *  HTML2PDF Librairy - myPdf class
+ *
+ * Propósito del Archivo:**
+ * Este archivo define la clase `HTML2PDF_myPdf`, la cual **extiende la funcionalidad de la clase `TCPDF`** (una librería PHP para generar archivos PDF). 
+ * El objetivo principal de esta clase es **proporcionar funcionalidades específicas y personalizaciones necesarias para que la librería HTML2PDF pueda convertir correctamente 
+ * documentos HTML a PDF.**
+ *
+ * En esencia, `HTML2PDF_myPdf` actúa como un **puente o adaptador** entre la lógica de conversión de HTML a PDF implementada en HTML2PDF y las capacidades de 
+ * bajo nivel de generación de PDF ofrecidas por TCPDF. Contiene métodos y propiedades que modifican el comportamiento predeterminado de TCPDF o añaden nuevas 
+ * funcionalidades requeridas por el proceso de conversión de HTML.
+ *
  * HTML2PDF Librairy - myPdf class
  *
  * HTML => PDF convertor
@@ -12,30 +24,143 @@
 require_once(dirname(__FILE__).'/tcpdfConfig.php');
 require_once(dirname(__FILE__).'/../_tcpdf_'.HTML2PDF_USED_TCPDF_VERSION.'/tcpdf.php');
 
+/**
+ * Clase extendida de TCPDF para funcionalidades específicas de HTML2PDF.
+ *
+ * **Descripción Detallada:**
+ * La clase `HTML2PDF_myPdf` hereda todas las funcionalidades de la clase `TCPDF`. Sobre esta herencia, **redefine o añade métodos** para adaptar la generación de PDF a las 
+ *  necesidades particulares de la conversión desde HTML. Esto incluye:
+ *
+ * - **Gestión del pie de página automático:** Permite configurar y generar un pie de página con información como número de página, fecha, hora y advertencias sobre formularios, 
+ *  utilizando textos traducidos por HTML2PDF.
+ * - **Optimización de la carga de fuentes:** Implementa un mecanismo para evitar la duplicación innecesaria de información de fuentes al clonar objetos PDF, 
+ *  mejorando el rendimiento y el uso de memoria.
+ * - **Acceso controlado a atributos privados de TCPDF:** Proporciona métodos públicos para que la librería HTML2PDF pueda interactuar con ciertos atributos internos de TCPDF sin 
+ *  violar su encapsulamiento.
+ * - **Manipulación de transformaciones gráficas:** Ofrece métodos para iniciar, detener y aplicar transformaciones como traslación y rotación, necesarias para renderizar 
+ *  correctamente ciertos elementos HTML o SVG.
+ * - **Redefinición de métodos de posicionamiento:** Sobrescribe los métodos `SetX`, `SetY` y `SetXY` de TCPDF para que el manejo de las coordenadas sea controlado por la 
+ *  lógica de HTML2PDF, en lugar del comportamiento automático de TCPDF.
+ * - **Implementación de funcionalidades gráficas específicas:** Añade métodos para dibujar formas geométricas complejas como rectángulos con esquinas redondeadas, curvas y arcos, 
+ *  que pueden ser utilizados para renderizar bordes, elementos SVG, etc.
+ * - **Adaptación para el renderizado SVG:** Incluye métodos para interpretar y dibujar elementos gráficos definidos en formato SVG, como rectángulos, líneas, elipses y polígonos 
+ *  avanzados.
+ */
+
 class HTML2PDF_myPdf extends TCPDF
 {
+    /**
+     * Parámetros para la configuración del pie de página automático.
+     *
+     * **Descripción:**
+     * Este array asociativo almacena las opciones para determinar qué información se incluirá en el pie de página generado automáticamente. Las claves del array son:
+     * - `'page'`: Un valor booleano que indica si se debe mostrar el número de página.
+     * - `'date'`: Un valor booleano que indica si se debe mostrar la fecha actual.
+     * - `'hour'`: Un valor booleano que indica si se debe mostrar la hora actual.
+     * - `'form'`: Un valor booleano que indica si se debe mostrar una advertencia relacionada con formularios.
+     *
+     * **Uso:**
+     * Estos parámetros son configurados mediante el método `SetMyFooter()` y utilizados por el método `Footer()` para construir el contenido del pie de página.
+     *
+     * @var array
+     */
+
     protected $_footerParam = array();
+
+    /**
+     * Almacena las transformaciones gráficas aplicadas.
+     *
+     * **Descripción:**
+     * Este array se utiliza para mantener un registro de las transformaciones gráficas (como traslaciones, rotaciones, escalados) que se han aplicado al documento PDF en un momento dado. Esto es útil para gestionar el contexto gráfico durante la conversión de HTML, especialmente para elementos que requieren transformaciones complejas.
+     *
+     * **Uso:**
+     * Las transformaciones se añaden a este array al iniciar una transformación (`startTransform()`) y se eliminan al finalizarla (`stopTransform()`). Los métodos como `setTranslate()` y `setRotation()` modifican el estado de la transformación actual.
+     *
+     * @var array
+     */
+
     protected $_transf      = array();
+
+    /**
+     * Almacena el identificador del último grupo de páginas procesado.
+     *
+     * **Descripción:**
+     * Esta variable se utiliza para rastrear el último grupo de páginas que se ha procesado. En el contexto de HTML2PDF, esto puede ser relevante para la numeración de páginas dentro de secciones o grupos específicos de un documento.
+     *
+     * **Uso:**
+     * Su valor se actualiza durante el proceso de generación del PDF cuando se manejan diferentes grupos de páginas.
+     *
+     * @var mixed
+     */
+
     protected $_myLastPageGroup = null;
+
+    /**
+     * Almacena el número de páginas del último grupo procesado.
+     *
+     * **Descripción:**
+     * Esta variable guarda la cantidad total de páginas que pertenecían al último grupo de páginas procesado. Se utiliza en conjunto con `$_myLastPageGroup` para la gestión de la numeración de páginas dentro de grupos.
+     *
+     * **Uso:**
+     * Su valor se actualiza al finalizar el procesamiento de un grupo de páginas.
+     *
+     * @var int
+     */
+
     protected $_myLastPageGroupNb = 0;
+
+    /**
+     * Valor constante utilizado para aproximar un arco de círculo mediante una curva Bézier cúbica.
+     *
+     * **Descripción:**
+     * El valor `0.5522847498` es una constante matemática derivada de la fórmula `(4/3 * (sqrt(2) - 1))`. Se utiliza como factor para calcular los puntos de control necesarios para dibujar un segmento de arco de círculo utilizando una curva Bézier, que es la forma en que PDF representa las curvas.
+     *
+     * **Uso:**
+     * Esta constante es utilizada en los métodos `clippingPathStart()` y `drawCurve()` para generar las curvas que forman las esquinas redondeadas o los arcos.
+     *
+     * @var float
+     */
 
     // used to make a radius with bezier : (4/3 * (sqrt(2) - 1))
     const MY_ARC = 0.5522847498;
 
+    /**
+     * Número de segmentos en los que se divide un arco para ser construido con curvas Bézier.
+     *
+     * **Descripción:**
+     * El valor `8` indica que cada arco de círculo que se desea dibujar se aproximará mediante 8 segmentos de curvas Bézier cúbicas. Un mayor número de segmentos resultará en una aproximación más suave del arco, pero también en una mayor complejidad del archivo PDF.
+     *
+     * **Uso:**
+     * Esta constante se utiliza en el método `_Arc()` para determinar cuántos segmentos Bézier se utilizarán para dibujar un arco.
+     *
+     * @var int
+     */
+
     // nb of segment to build a arc with bezier curv
     const ARC_NB_SEGMENT = 8;
-
-    /**
-     * class constructor
+/**
+     * Constructor de la clase.
      *
-     * @param string  $orientation page orientation, same as TCPDF
-     * @param string  $unit        User measure unit, same as TCPDF
-     * @param mixed   $format      The format used for pages, same as TCPDF
-     * @param boolean $unicode     TRUE means that the input text is unicode (default = true)
-     * @param String  $encoding    charset encoding; default is UTF-8
-     * @param boolean $diskcache   if TRUE reduce the RAM memory usage by caching temporary data on filesystem (slower).
+     * **Descripción Detallada:**
+     * El constructor de la clase `HTML2PDF_myPdf` realiza las siguientes acciones:
+     * 1. **Llama al constructor padre (`parent::__construct(...)`)**: Inicializa la instancia de la clase `TCPDF` con los parámetros proporcionados (orientación, unidad, formato, etc.). Esto configura la base para la generación del PDF.
+     * 2. **Configura metadatos del PDF**: Establece el creador del documento PDF utilizando la constante `PDF_CREATOR` definida en la configuración de TCPDF.
+     * 3. **Desactiva el salto de página automático de TCPDF**: Llama a `SetAutoPageBreak(false, 0)` para deshabilitar el mecanismo automático de TCPDF para insertar nuevos saltos de página. El manejo de los saltos de página será controlado por la lógica de HTML2PDF.
+     * 4. **Establece el estilo de los extremos de las líneas**: Define el estilo de la "tapa" de las líneas dibujadas a '2 J' (Round Cap), lo que afecta la apariencia de los extremos de las líneas y los bordes.
+     * 5. **Desactiva la impresión de la cabecera**: Llama a `setPrintHeader(false)` para evitar que la cabecera predeterminada de TCPDF se imprima en las páginas.
+     * 6. **Establece la calidad de las imágenes JPEG**: Define la calidad de compresión para las imágenes JPEG que se incluyan en el PDF a un valor de 90.
+     * 7. **Prepara el pie de página automático**: Llama al método `SetMyFooter()` para inicializar la configuración del pie de página automático con los valores predeterminados (ningún elemento visible inicialmente).
+     * 8. **Establece el margen de celda a cero**: Define el margen interno de las celdas (`cMargin`) a 0.
+     *
+     * @param string  $orientation Orientación de la página (P para vertical, L para horizontal), igual que en TCPDF.
+     * @param string  $unit        Unidad de medida del usuario, igual que en TCPDF (pt, mm, cm, in).
+     * @param mixed   $format      Formato de la página, igual que en TCPDF (A4, Letter, etc.).
+     * @param boolean $unicode     TRUE si el texto de entrada es Unicode (predeterminado = true).
+     * @param string  $encoding    Codificación de caracteres; el valor predeterminado es UTF-8.
+     * @param boolean $diskcache   Si TRUE, reduce el uso de memoria RAM almacenando datos temporales en el sistema de archivos (más lento).
      * @access public
      */
+
     public function __construct(
         $orientation='P',
         $unit='mm',
@@ -45,9 +170,11 @@ class HTML2PDF_myPdf extends TCPDF
         $diskcache=false)
     {
         // call the parent constructor
+        // Llama al constructor padre
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache);
 
         // init the specific parameters used by HTML2PDF
+        // Inicializa los parámetros específicos utilizados por HTML2PDF
         $this->SetCreator(PDF_CREATOR);
         $this->SetAutoPageBreak(false, 0);
         $this->linestyleCap = '2 J';
@@ -55,20 +182,31 @@ class HTML2PDF_myPdf extends TCPDF
         $this->jpeg_quality = 90;
 
         // prepare the automatic footer
+        // Prepara el pie de página automático
         $this->SetMyFooter();
 
         $this->cMargin = 0;
     }
 
     /**
-     * Set the parameters for the automatic footer
+     * Establece los parámetros para el pie de página automático.
      *
-     * @param boolean $page display the page number
-     * @param boolean $date display the date
-     * @param boolean $hour display the hour
-     * @param boolean $form display a warning abour forms
+     * **Descripción Detallada:**
+     * Este método permite configurar qué elementos se mostrarán en el pie de página automático del documento PDF. Recibe cuatro parámetros booleanos que controlan la visibilidad de diferentes elementos:
+     * - `$page`: Si es `true`, se mostrará el número de página actual y el número total de páginas.
+     * - `$date`: Si es `true`, se mostrará la fecha actual.
+     * - `$hour`: Si es `true`, se mostrará la hora actual.
+     * - `$form`: Si es `true`, se mostrará un texto de advertencia relacionado con formularios (útil si el PDF contiene campos de formulario que pueden no ser totalmente interactivos en todos los lectores).
+     *
+     * Internamente, este método simplemente guarda los valores de estos parámetros en el array protegido `$_footerParam`, el cual será utilizado posteriormente por el método `Footer()` para generar el contenido del pie de página.
+     *
+     * @param boolean $page Muestra el número de página (predeterminado: false).
+     * @param boolean $date Muestra la fecha (predeterminado: false).
+     * @param boolean $hour Muestra la hora (predeterminado: false).
+     * @param boolean $form Muestra una advertencia sobre formularios (predeterminado: false).
      * @access public
      */
+
     public function SetMyFooter($page = false, $date = false, $hour = false, $form = false)
     {
         $page    = ($page ? true : false);
@@ -80,14 +218,30 @@ class HTML2PDF_myPdf extends TCPDF
     }
 
     /**
-     * This function is call automatically by TCPDF at the end of a page
-     * It takes no parameters
+     * Este método es llamado automáticamente por TCPDF al final de cada página.
+     *
+     * **Descripción Detallada:**
+     * El método `Footer()` se encarga de generar y dibujar el pie de página en cada página del documento PDF. Su funcionamiento es el siguiente:
+     * 1. **Inicializa el texto del pie de página**: Comienza con una cadena vacía (`$txt`).
+     * 2. **Añade la advertencia de formulario (si está habilitada)**: Si el parámetro `'form'` en `$_footerParam` es `true`, añade el texto traducido correspondiente a la advertencia de formulario (obtenido de `HTML2PDF_locale`).
+     * 3. **Añade la fecha y/o hora (si están habilitadas)**:
+     * - Si tanto `'date'` como `'hour'` son `true`, añade la fecha y la hora con un separador, utilizando el texto traducido correspondiente.
+     * - Si solo `'date'` es `true`, añade solo la fecha con el separador si ya hay texto en `$txt`.
+     * - Si solo `'hour'` es `true`, añade solo la hora con el separador si ya hay texto en `$txt`.
+     * 4. **Añade el número de página (si está habilitado)**: Si el parámetro `'page'` en `$_footerParam` es `true`, añade el texto traducido para el número de página, incluyendo el número de página actual y el número total de páginas (que se reemplazan mediante marcadores).
+     * 5. **Reemplaza los marcadores de fecha y página**: Si la cadena `$txt` no está vacía, busca y reemplaza marcadores como `[[date_d]]`, `[[date_m]]`, `[[page_cu]]`, `[[page_nb]]`, etc., con los valores actuales de fecha y número de página. Los números de página actual y total se obtienen mediante los métodos `getMyNumPage()` y `getMyAliasNbPages()` (que podrían ser extensiones o adaptaciones de métodos de TCPDF).
+     * 6. **Dibuja el pie de página**:
+     * - Establece la posición vertical en la parte inferior de la página (`parent::SetY(-11)`).
+     * - Establece la fuente a Helvetica, en cursiva, con un tamaño de 8 puntos.
+     * - Dibuja una celda que abarca todo el ancho de la página (`0`), con una altura de 10 unidades, conteniendo el texto `$txt`, sin borde (`0`), sin mover la posición después (`0`), y alineada a la derecha (`'R'`).
      *
      * @access public
      */
+
     public function Footer()
     {
         // prepare the text from the tranlated text
+        // Prepara el texto a partir del texto traducido
         $txt = '';
         if ($this->_footerParam['form']) {
             $txt = (HTML2PDF_locale::get('pdf05'));
@@ -107,6 +261,7 @@ class HTML2PDF_myPdf extends TCPDF
 
         if (strlen($txt)>0) {
             // replace some values
+            // Reemplaza algunos valores
             $toReplace = array(
                 '[[date_d]]'  => date('d'),
                 '[[date_m]]'  => date('m'),
@@ -120,6 +275,7 @@ class HTML2PDF_myPdf extends TCPDF
             $txt = str_replace(array_keys($toReplace), array_values($toReplace), $txt);
 
             // draw the footer
+            // Dibuja el pie de página
             parent::SetY(-11);
             $this->SetFont('helvetica', 'I', 8);
             $this->Cell(0, 10, $txt, 0, 0, 'R');
@@ -127,12 +283,21 @@ class HTML2PDF_myPdf extends TCPDF
     }
 
      /**
-     * after cloning a object, we does not want to clone all the front informations
-     * because it take a lot a time and a lot of memory => we use reference
+     * Después de clonar un objeto, no queremos clonar toda la información
+     * de la fuente, ya que lleva mucho tiempo y mucha memoria => usamos referencias.
      *
-     * @param &HTML2PDF_myPdf object
+     * **Descripción Detallada:**
+     * Este método está diseñado para optimizar el proceso de clonación de objetos `HTML2PDF_myPdf`. Cuando se clona un objeto PDF, copiar toda la información relacionada con las fuentes (definiciones, archivos, etc.) puede ser costoso en términos de tiempo y memoria.
+     *
+     * `cloneFontFrom()` toma como argumento una referencia a otro objeto `HTML2PDF_myPdf` ya existente. En lugar de copiar los arrays que contienen la información de las fuentes, el método **asigna las propiedades de fuente del objeto actual para que referencien los mismos arrays del objeto pasado como argumento**.
+     *
+     * Esto significa que ambos objetos compartirán la misma información de fuentes en memoria. Cualquier modificación a la información de fuentes a través de uno de los objetos afectará al otro. Esta técnica es segura en este contexto porque la información de las fuentes generalmente no se modifica después de la carga inicial.
+     *
+     * **Parámetros:**
+     * @param &HTML2PDF_myPdf $pdf Referencia al objeto `HTML2PDF_myPdf` del cual se tomarán las referencias a la información de las fuentes.
      * @access public
      */
+
     public function cloneFontFrom(&$pdf)
     {
         $this->fonts            = &$pdf->getFonts();
@@ -146,12 +311,21 @@ class HTML2PDF_myPdf extends TCPDF
     }
 
     /**
-     * multiple public accessor for some private attributs
-     * used only by cloneFontFrom
+     * Múltiples accesores públicos para algunos atributos privados relacionados con las fuentes.
+     * Utilizado exclusivamente por el método `cloneFontFrom`.
      *
-     * @return &array
+     * **Descripción Detallada:**
+     * Estos métodos (`getFonts()`, `getFontFiles()`, etc.) proporcionan acceso de **solo lectura por referencia** a los arrays privados de la clase que almacenan la información de las fuentes.
+     *
+     * Su único propósito es ser utilizados por el método `cloneFontFrom()` para permitir que un objeto clonado establezca referencias a la información de fuentes de otro objeto, sin necesidad de copiar los datos. Esto mejora la eficiencia en el uso de memoria y el tiempo de clonación.
+     *
+     * **Retorno:**
+     * Cada método devuelve una **referencia (`&`)** al array privado correspondiente que contiene la información de las fuentes.
+     *
+     * @return &array Referencia al array del atributo solicitado.
      * @access public
      */
+
     public function &getFonts()
     {
         return $this->fonts;
@@ -186,12 +360,21 @@ class HTML2PDF_myPdf extends TCPDF
     }
 
     /**
-     * Verify that a Font is already loaded
+     * Verifica si una fuente ya ha sido cargada en el documento PDF.
      *
-     * @param string Font Key
-     * @return boolean
+     * **Descripción Detallada:**
+     * Este método toma una clave de fuente (`$fontKey`) como argumento y verifica si una fuente con esa clave ya está registrada en la instancia actual del documento PDF.
+     *
+     * La verificación se realiza buscando la clave en dos arrays internos:
+     * - `$this->fonts`: Contiene información sobre las fuentes TrueType, Type1, etc., que han sido añadidas al documento.
+     * - `$this->CoreFonts`: Contiene un listado de las fuentes base o "core fonts" que están disponibles en la mayoría de los lectores de PDF y que no necesitan ser incrustadas en el documento.
+     *
+     * **Parámetros:**
+     * @param string $fontKey Clave única que identifica la fuente.
+     * @return boolean `true` si la fuente con la clave especificada ya está cargada (ya sea como una fuente añadida o como una fuente base), `false` en caso contrario.
      * @access public
-     */
+     */ 
+
     public function isLoadedFont($fontKey)
     {
         if (isset($this->fonts[$fontKey])) {
@@ -206,22 +389,34 @@ class HTML2PDF_myPdf extends TCPDF
     }
 
     /**
-     * Get the Word Spacing
+     * Obtiene el valor actual del espaciado entre palabras.
      *
+     * **Descripción:**
+     * Este método devuelve el valor numérico que representa el espaciado adicional que se añade entre las palabras al renderizar texto. Esta propiedad afecta la apariencia del texto en el PDF.
+     *
+     * **Retorno:**
      * @access public
-     * @return float word spacing
+     * @return float El valor actual del espaciado entre palabras en la unidad de medida del documento.
      */
+
     public function getWordSpacing()
     {
         return $this->ws;
     }
 
     /**
-     * set the Word Spacing
+     * Establece el espaciado entre palabras.
      *
-     * @param float word spacing
+     * **Descripción:**
+     * Este método permite modificar el espaciado adicional que se aplicará entre las palabras al dibujar texto. Toma un valor numérico como argumento, que representa la cantidad de espacio adicional a añadir (en la unidad de medida del documento).
+     *
+     * Internamente, guarda este valor en la propiedad `$this->ws` y genera una instrucción en el flujo del PDF (`_out`) para aplicar este nuevo espaciado. La instrucción `'Tw'` (Word Spacing) en el PDF especifica este valor, multiplicado por el factor de escala interno `$this->k`.
+     *
+     * **Parámetros:**
+     * @param float $ws El nuevo valor para el espaciado entre palabras (predeterminado: 0., sin espaciado adicional).
      * @access public
      */
+
     public function setWordSpacing($ws=0.)
     {
         $this->ws = $ws;
@@ -229,7 +424,12 @@ class HTML2PDF_myPdf extends TCPDF
     }
 
     /**
-     * start to use a rectangular Cliping Path with radius corners
+     * Inicia la definición de una ruta de recorte rectangular con la posibilidad de tener esquinas redondeadas.
+     *
+     * **Descripción Detallada:**
+     * Este método comienza la definición de una "clipping path" (ruta de recorte) en el documento PDF. Una ruta de recorte limita la región en la que se pueden dibujar elementos posteriores. Cualquier cosa dibujada fuera de esta ruta será invisible.
+     *
+     * La ruta definida por este método es un rectángulo, y opcionalmente se pueden especificar radios para redondear cada una de sus cuatro esquinas.
      *
      * @param float $x (top left corner)
      * @param float $y (top left corner)
@@ -252,13 +452,16 @@ class HTML2PDF_myPdf extends TCPDF
         $cornerBR=null)
     {
         // init the path
+        // Inicializa la ruta
         $path = '';
 
         // if we have the position and the size of the rectangle, we can proceed
+        // Si tenemos la posición y el tamaño del rectángulo, podemos proceder
         if ($x!==null && $y!==null && $w!==null && $h!==null) {
             // the positions of the rectangle's corners
+            // Las posiciones de las esquinas del rectángulo (convertidas a la unidad interna del PDF)
             $x1 = $x*$this->k;
-            $y1 = ($this->h-$y)*$this->k;
+            $y1 = ($this->h-$y)*$this->k; // Inversión de Y debido al sistema de coordenadas de PDF
 
             $x2 = ($x+$w)*$this->k;
             $y2 = ($this->h-$y)*$this->k;
@@ -270,8 +473,11 @@ class HTML2PDF_myPdf extends TCPDF
             $y4 = ($this->h-$y-$h)*$this->k;
 
             // if we have at least one radius corner, then we proceed to a specific path, else it is just a rectangle
+            // Si hay al menos un radio en las esquinas, se construye una ruta específica con curvas Bézier
             if ($cornerTL || $cornerTR || $cornerBL || $cornerBR) {
                 // prepare the radius values
+                // Prepara los valores de los radios (convertidos a la unidad interna del PDF y ajustando el signo para Y)
+                if ($cornerTL) {
                 if ($cornerTL) {
                     $cornerTL[0] = $cornerTL[0]*$this->k;
                     $cornerTL[1] =-$cornerTL[1]*$this->k;

@@ -1,5 +1,6 @@
 <?php
 //============================================================+
+//define constantes de configuracion para personalizar el comportamiento de TCPDF, rutas, configuracion del documento PDF, tipografias, margenes y medidas, demas ajustes.
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
 // Last Update : 2010-04-28
