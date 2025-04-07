@@ -1,5 +1,7 @@
 <?php
 /**
+ * definir la estructura básica del HTML y cargar las hojas de estilo necesarias cuando se renderiza una vista de contenido 
+ * (como un artículo, un formulario o un componente en una ventana emergente o "popup").
  * @package     Joomla.Site
  * @subpackage  Templates.beez3
  *

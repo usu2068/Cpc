@@ -1,5 +1,6 @@
 <?php
 /**
+ * Su función es mostrar una navegación jerárquica que indica al usuario en qué parte del sitio se encuentra, como por ejemplo: Inicio > Blog > Categoría > Artículo
  * @package     Joomla.Site
  * @subpackage  Templates.beez3
  *

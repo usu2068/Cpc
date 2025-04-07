@@ -1,4 +1,7 @@
 <?php
+/**
+ * registrar un título nuevo en el sistema, ya sea como parte de una prohibición o de una política, dependiendo del valor enviado por POST en la variable tipo.
+ */
 include('/home/aplicati/public_html/utlr/templates/class/consultas.php');
 date_default_timezone_set('America/Bogota');
 

@@ -1,5 +1,6 @@
 <?php
 /**
+ * Su función es mostrar el formulario de inicio de sesión o el botón de cierre de sesión, dependiendo de si el usuario está logueado o no.
  * @package     Joomla.Site
  * @subpackage  Templates.beez3
  *

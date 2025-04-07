@@ -1,5 +1,8 @@
 <?php
 /**
+ * mostrar una tabla con los feeds RSS disponibles dentro de la categoría actual.
+ * Muestra una tabla con los "feeds" (fuentes de noticias) dentro de una categoría.
+ * 
  * @package     Joomla.Site
  * @subpackage  com_newsfeeds
  *

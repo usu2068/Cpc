@@ -1,5 +1,6 @@
 <?php
 /**
+ * Su propósito principal es mostrar una categoría de fuentes de noticias (newsfeeds) con su título, descripción, imagen (opcional), y una lista de ítems (feeds) y subcategorías si las hay
  * @package     Joomla.Site
  * @subpackage  com_newsfeeds
  *

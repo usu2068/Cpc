@@ -1,4 +1,6 @@
 <?php
+//desactiva o bloquea un registro dependiendo del tipo de entidad que se está gestionando. Puede despublicar una categoría (tipo = E) 
+//o bloquear un usuario (tipo = U) en una base de datos mediante el uso de una clase personalizada para consultas SQL.
 	include('../../class/consultas.php');
 	
 	$id = $_POST['id'];

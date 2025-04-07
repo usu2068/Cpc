@@ -1,5 +1,11 @@
 <?php
 /**
+ * mostrar el formulario de edición o creación de un enlace web (weblink) desde el frontend del sitio. 
+ * Es decir, permite a los usuarios (según sus permisos) agregar o editar enlaces web desde el sitio, no desde el backend.
+ * 
+ * Este archivo genera el formulario de frontend para que los usuarios puedan crear o editar enlaces web en Joomla 
+ * (si tienen permisos). Se integra con el componente com_weblinks y usa las APIs y helpers de Joomla para manejar validación, 
+ * permisos, internacionalización, seguridad y presentación.
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *

@@ -1,4 +1,6 @@
 <?php 
+//actualiza en la base de datos el valor del salario mínimo legal vigente (SMLV) para el año actual. Utiliza una clase personalizada de consultas para ejecutar la operación UPDATE y muestra un mensaje de confirmación al finalizar.
+
 include('/home/aplicati/public_html/utlr/templates/class/consultas.php');
 date_default_timezone_set('America/Bogota');
 

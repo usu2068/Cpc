@@ -1,5 +1,8 @@
 <?php
 /**
+ * se encarga de mostrar las subcategorías (categorías hijas) de una categoría principal dentro del sistema de feeds RSS.
+ * Muestra una lista <ul> de subcategorías que pertenecen a la categoría actual.
+ * 
  * @package     Joomla.Site
  * @subpackage  com_newsfeeds
  *

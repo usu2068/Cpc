@@ -1,5 +1,10 @@
 <?php
 /**
+ * mostrar los mensajes del sistema al usuario, como por ejemplo:
+ * ✅ Mensajes de éxito (“Artículo guardado correctamente”)
+ * ⚠️ Advertencias
+ * ❌ Errores (“No tiene permisos para acceder a esta página”)
+ * 
  * @package     Joomla.Site
  * @subpackage  Templates.beez3
  *

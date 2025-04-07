@@ -1,4 +1,13 @@
 <?php 
+/**
+ * registrar un nuevo usuario en una plataforma web, asegurándose de que no exista previamente en el sistema (por usuario, cédula o correo electrónico), 
+ * y realizando la inserción en múltiples tablas relacionadas con:
+ * usuarios,
+ * permisos de grupo,
+ * asignación de contenido,
+ * estructura jerárquica de activos/artículos (assets),
+ * 
+ */
 include('/home/aplicati/public_html/utlr/templates/class/consultas.php');
 require_once "/home/aplicati/public_html/utlr/templates/class/PasswordHash.php";// Aqui se carga la libreria si el codigo que ustedes usan esta en nuestro host solo dejela como esta de lo contrario descargue la libreria y enrute aca
 date_default_timezone_set('America/Bogota');

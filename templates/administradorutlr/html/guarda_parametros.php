@@ -1,4 +1,8 @@
 <?php
+/**
+ * script de backend que se encarga de actualizar o insertar datos en varias tablas relacionadas con 
+ * fondos de inversión y títulos, dependiendo de ciertos parámetros recibidos por POST
+ */
 	include_once('/home/aplicati/public_html/utlr/templates/class/consultas.php');
 	
 	$consult = new mysql();

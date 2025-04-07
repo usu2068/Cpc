@@ -1,5 +1,6 @@
 <?php
 /**
+ * Este archivo define la estructura general de la plantilla del sitio web, incluyendo la inclusión de estilos, scripts, módulos y el contenido principal.
  * @package     Joomla.Site
  * @subpackage  Templates.beez3
  * 

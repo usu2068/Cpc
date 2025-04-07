@@ -1,4 +1,9 @@
 <?php
+/**
+ * realiza la actualización de valores máximos y mínimos para ciertos títulos en una base de datos, y está diseñado para funcionar dentro 
+ * de una aplicación web que probablemente maneje información financiera o de inversión.
+ * 
+ */
 	include_once('/home/aplicati/public_html/utlr/templates/class/consultas.php');
 	
 	$consult = new mysql();

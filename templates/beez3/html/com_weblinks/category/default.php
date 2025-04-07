@@ -1,5 +1,15 @@
 <?php
 /**
+ * se encarga de mostrar los enlaces web que pertenecen a una determinada categoría, junto con su título, descripción, 
+ * subcategorías y otros elementos configurables desde el backend.
+ * 
+ * Este archivo:
+ * ✅ Muestra una categoría de enlaces web en el frontend de Joomla.
+ * ✅ Presenta su título, imagen, descripción (si están habilitados).
+ * ✅ Carga los enlaces asociados a la categoría.
+ * ✅ Muestra las subcategorías si existen.
+ * ✅ Usa configuraciones definidas en los parámetros del componente o del menú.
+ * 
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *

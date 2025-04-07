@@ -1,5 +1,6 @@
 <?php
 /**
+ * fragmento que prepara traducciones y parámetros de la plantilla para usarlos en JavaScript, lo cual permite que la interfaz sea dinámica y multilenguaje.
  * @package     Joomla.Site
  * @subpackage  Templates.beez3
  *

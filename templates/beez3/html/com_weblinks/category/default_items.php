@@ -1,5 +1,7 @@
 <?php
 /**
+ * Mostrar una lista de enlaces web (weblinks) dentro de una categoría determinada, con opciones como paginación, 
+ * descripciones, imágenes, número de visitas (hits), y formato personalizado de visualización (popup, nueva ventana, modal, etc.).
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *

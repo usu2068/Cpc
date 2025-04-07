@@ -1,5 +1,6 @@
 <?php
 /**
+ * plantilla de error personalizada de joomla, se usa para mostrar paginas de error como la de "pagina no encontrada" u otros errores de HTTP en el sitio web
  * @package     Joomla.Site
  * @subpackage  Templates.beez3
  *

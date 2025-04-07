@@ -1,5 +1,6 @@
 <?php
 /**
+ * se encarga de mostrar las subcategorías (hijas) de una categoría de enlaces web, junto con sus descripciones y el número de enlaces en cada una.
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *

@@ -1,5 +1,6 @@
 <?php
 /**
+ * encargado de mostrar las subcategorías de una categoría principal de enlaces web, en forma de una lista jerárquica.
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *

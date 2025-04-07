@@ -1,4 +1,8 @@
 <?php
+/**
+ * guardar en la base de datos una estructura jerárquica de políticas o prohibiciones, según un tipo indicado. Es parte de un sistema que probablemente gestiona tipos de cartera, 
+ * políticas y prohibiciones en una organización financiera o administrativa.
+ */
 include('/home/aplicati/public_html/utlr/templates/class/consultas.php');
 date_default_timezone_set('America/Bogota');
 

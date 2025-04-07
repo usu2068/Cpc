@@ -1,5 +1,7 @@
 <?php
 /**
+ * representa una vista de listado de categorías dentro del sitio. Es decir, muestra una lista de categorías de enlaces web, 
+ * junto con información opcional como encabezado de página y descripción.
  * @package     Joomla.Site
  * @subpackage  com_weblinks
  *

@@ -1,5 +1,8 @@
 <?php
 /**
+ * define tres funciones que personalizan cómo se renderizan los módulos en Joomla!, específicamente para la plantilla beez3. 
+ * Estas funciones se conocen como Chrome de módulos (o "module chrome") y sirven para aplicar un diseño específico al contenido de un módulo, 
+ * como si fueran envoltorios con diferentes estilos o comportamientos.
  * @package     Joomla.Site
  * @subpackage  Templates.beez3
  *

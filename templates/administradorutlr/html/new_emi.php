@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * registrar un nuevo emisor en la base de datos, siempre y cuando no exista ya un emisor con el mismo NIT. Es parte de un sistema de parametrización de emisores.
+ * 
+ */
 	include('/home/aplicati/public_html/utlr/templates/class/consultas.php');
 	date_default_timezone_set('America/Bogota');
 

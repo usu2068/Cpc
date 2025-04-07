@@ -1,4 +1,12 @@
 <?php
+/**
+ * Recibe múltiples datos vía POST, incluyendo arreglos de IDs y valores máximos/mínimos de títulos y totales.
+ * Dependiendo del tipo (tip), selecciona tablas distintas para aplicar las actualizaciones.
+ * Si el tip es 1, actualiza o inserta los valores globales del fondo en la tabla jo33_FIC_UTLR_total_activos_fon.
+ * Recorre listas de títulos y grupos para actualizar sus valores máximos y mínimos correspondientes.
+ * Muestra un mensaje de éxito si todo se ejecuta correctamente.
+ * 
+ */
 	include_once('/home/aplicati/public_html/utlr/templates/class/consultas.php');
 	
 	$consult = new mysql();
@@ -23,6 +31,7 @@
 	
 	$tip = $_POST['tip'];
 	
+	// Se determina qué tablas usar dependiendo del tipo
 	if($tip == 0){
 		$table_tit = array('jo33_FIC_UTLR_titulos_pol_tip');
 		$table_tot = array('jo33_FIC_UTLR_grupos_pol_tip');		
@@ -33,16 +42,20 @@
 		
 		$table_act = array('jo33_FIC_UTLR_total_activos_fon');
 		$valC_act = array('id_fondos');
-		$val_act = array($id_fon);		
+		$val_act = array($id_fon);	
+
+		// Verificamos si ya existe un registro para el fondo
 		$sql_act = $consult -> sql('S', $table_act, $val_act, $valC_act, $valU);
 		$row_act = mysql_num_rows($sql_act);
 		
 		if($row_act == 0){
+			// Si no existe, se inserta un nuevo registro con los límites y el fondo
 			$valC_act = array('max_inver', 'min_inver', 'max_depo', 'min_depo', 'max_tot', 'min_tot', 'active', 'trash', 'id_fondos');
 			$val_act = array($max_inv, $min_inv, $max_dep, $min_dep, $max_tota, $min_tota, 1, 1, $id_fon);
 		
 			$sql_act = $consult -> sql('I', $table_act, $val_act, $valC_act, $valU);
 		}else{
+			// Si ya existe, se actualiza el registro
 			$valC_act = array('max_inver', 'min_inver', 'max_depo', 'min_depo', 'max_tot', 'min_tot');
 			$val_act = array($max_inv, $min_inv, $max_dep, $min_dep, $max_tota, $min_tota);
 			$valU_act = array('id_fondos = '.$id_fon);
