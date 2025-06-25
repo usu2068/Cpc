@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Archivo de manifiesto XML para la instalación y configuracion del componente  com_ajax en joomla.
+Este archivo define los metadatos, archivos, idiomas y configuracion de administracion del componente.-->
+
+<extension type="component" version="3.2" method="upgrade">
+<!--Nombre del componente-->
+	<name>com_ajax</name>
+
+	<!--Informacion del autor-->
+	<author>Joomla! Project</author>
+	<creationDate>August 2013</creationDate>
+	<copyright>(C) 2005 - 2014 Open Source Matters. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+
+	<!--Version del componente-->	
+	<version>3.2.0</version>
+
+	<!--Descripcion del componente (se puede traducir desde el archivo de idioma)-->
+	<description>COM_AJAX_XML_DESCRIPTION</description>
+
+	<!--Archivos del componente en el frontend del sitio-->
+	<files folder="site">
+		<filename>ajax.php</filename> <!--Archivo principal del componente en el frontend-->
+		<filename>index.html</filename> <!--Archivo de seguridad para evitar navegacion directa en directorios-->
+	</files>
+	<!--Archivo de idioma para el frontend-->
+	<languages folder="site">
+		<language tag="en-GB">language/en-GB.com_ajax.ini</language>
+	</languages>
+
+<!--configuracion del backend (administracion)-->
+	<administration>
+	<!--archivos del backend del componente-->
+		<files folder="admin">
+			<filename>ajax.php</filename> <!--Aarchivo principal del backend-->
+			<filename>index.html</filename> <!--archivo de seguridad-->
+		</files>
+		<!--archivo de idioma para la administracion-->
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB.com_ajax.ini</language>
+			<language tag="en-GB">language/en-GB.com_ajax.sys.ini</language>
+		</languages>
+	</administration>
+</extension>

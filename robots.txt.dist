@@ -1,0 +1,45 @@
+# INSTRUCCIONES PARA LA UBICACION DEL ARCHIVO:
+# If the Joomla site is installed within a folder such as at 
+# si el sitio joomla esta instalado en un subdirectorio (por ejemplo, www.ejemplo.com/joomla/),
+# e.g. www.example.com/joomla/ the robots.txt file MUST be
+# este archivo debe moverse a la raiz del dominio (www.ejemplo.com/robots.txt).
+# moved to the site root at e.g. www.example.com/robots.txt
+# AND the joomla folder name MUST be prefixed to the disallowed
+#ademas, es necesario agregar el nombre de la carpeta de joomla antes de cada ruta en "Disallow"
+# path, e.g. the Disallow rule for the /administrator/ folder
+# MUST be changed to read Disallow: /joomla/administrator/
+#ejemplo: en lugar de "Disallow: /administrator/", se debe escribir "Disallow: /joomla/administrator/".
+#
+# For more information about the robots.txt standard, see:
+# http://www.robotstxt.org/orig.html
+#
+# For syntax checking, see: - herramientas para comprobar la sintaxis
+# http://tool.motoricerca.info/robots-checker.phtml
+
+# Definir las reglass para todos los rastreadores
+User-agent: *
+
+# Directorios restringidos para los motores de busqueda
+# Directorios restringidos para los motores de busqueda
+Disallow: /administrator/  # Panel de administración
+Disallow: /bin/            # Archivos ejecutables del sistema
+Disallow: /cache/          # Caché del sistema
+Disallow: /cli/            # Scripts de línea de comandos
+Disallow: /components/     # Componentes del sistema
+Disallow: /includes/       # Archivos internos de Joomla
+Disallow: /installation/   # Carpeta de instalación (debe eliminarse después de instalar Joomla)
+Disallow: /language/       # Archivos de idioma del sistema
+Disallow: /layouts/        # Diseños internos del CMS
+Disallow: /libraries/      # Librerías internas de Joomla
+Disallow: /logs/           # Archivos de registro del sistema
+Disallow: /media/          # Recursos multimedia internos
+Disallow: /modules/        # Módulos del sistema
+Disallow: /plugins/        # Plugins del sistema
+Disallow: /templates/      # Plantillas de Joomla
+Disallow: /tmp/            # Archivos temporales
+
+# Este archivo impide que los motores de búsqueda indexen carpetas internas de Joomla,
+# protegiendo información sensible y optimizando la visibilidad del sitio en los resultados de búsqueda.
+# User-agent: * → Se aplica a todos los rastreadores web.
+# Disallow → Evita que los motores de búsqueda indexen ciertas carpetas internas de Joomla.
+

@@ -1,0 +1,61 @@
+<!--
+Este archivo com_admin.xml es el archivo de instalación y configuración del componente com_admin en Joomla.
+Define información clave del componente, archivos incluidos y configuraciones necesarias para su instalación o actualización.
+-->
+
+<!--Define el formato del archivo como XML
+codificacion en UTF-8, compatible con  multiples idiomas-->
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--DEFINE QUE ESTE ARCHIVO CORRESPONDE A UN COMPONENTE (type="component").
+Es compatible con Joomla 3.1 y versiones superiores (version="3.1").
+El método de instalación es upgrade, lo que significa que puede actualizar una versión existente sin eliminar datos previos.-->
+
+<extension type="component" version="3.1" method="upgrade">
+
+<!--Informacion del componente-->
+	<name>com_admin</name> <!--Nombre del componente-->
+	<author>Joomla! Project</author> <!--Autor del componente-->
+	<creationDate>April 2006</creationDate> <!--Fecha de creacion-->
+	<copyright>(C) 2005 - 2014 Open Source Matters. All rights reserved. <!--derechos de autor-->
+	</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license> <!--tipo de licencia (GNU GPL v2 o posterior)-->
+	<authorEmail>admin@joomla.org</authorEmail> <!--Correo de contacto del autor-->
+	<authorUrl>www.joomla.org</authorUrl> <!--pagina oficial-->
+	<version>3.0.0</version> <!--version del componente 3.0.0-->
+	<description>COM_ADMIN_XML_DESCRIPTION</description> <!--referencia a la descripcion del componente, que se encuentra en el archivo de idioma-->
+
+	<!--Sección vacía. Generalmente, aquí se definen archivos de medios (imágenes, íconos, etc.), pero en este caso, no hay contenido.-->
+	<media />
+
+	<!--Define los archivos y configuraciones del componente en el panel de administración de Joomla.-->
+	<administration>
+
+	<!--Ubica los archivos en la carpeta admin/.-->
+		<files folder="admin">
+		<!--Incluye archivos clave del backend-->
+			<filename>admin.php</filename> <!--archivo principal del componente-->
+			<filename>controller.php</filename> <!--controlador principal-->
+			<filename>index.html</filename> <!--archivo de seguridad para evitar accesos directos a la carpeta-->
+			<!--incluye carpetas-->
+			<folder>helpers</folder> <!--contiene funciones auxiliares-->
+			<folder>models</folder><!--contiene los modelos de datos-->
+			<folder>views</folder><!--contiene las vistas del componente-->
+		</files>
+		<!--Definicion de idiomas-->
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB.com_admin.ini</language> <!--contiene las traducciones de textos visibles en la interfaz-->
+			<language tag="en-GB">language/en-GB.com_admin.sys.ini</language> <!--contiene textos del sistema, como mensajes de error-->
+		</languages>
+	</administration>
+</extension>
+
+<!--NOTAS:
+✅ Define la instalación del componente com_admin en Joomla.
+✅ Especifica archivos clave, idioma y versión.
+✅ Usa el método upgrade, permitiendo actualizaciones sin perder datos.
+✅ Carga archivos del backend (admin.php, controller.php, etc.).
+✅ Incluye soporte para traducción con archivos .ini.
+Este archivo es esencial para que Joomla reconozca, instale y administre el componente correctamente.
+-->

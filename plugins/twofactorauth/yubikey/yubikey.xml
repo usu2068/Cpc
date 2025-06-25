@@ -1,0 +1,75 @@
+<!-- Declaración XML indicando la versión y el tipo de codificación de caracteres -->
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+		Inicio del manifiesto de la extensión:
+		- version: versión mínima de Joomla requerida.
+		- type: tipo de extensión (en este caso, plugin).
+		- group: grupo de plugins al que pertenece (sistema).
+	-->
+<extension version="3.1" type="plugin" group="system">
+	
+	<!-- Nombre interno del plugin. Sigue la convención: plg_tipo_nombre -->
+	<name>plg_twofactorauth_yubikey</name>
+	
+	<!-- Autor del plugin -->
+	<author>Joomla! Project</author>
+	
+	<!-- Fecha de creación del plugin -->
+	<creationDate>September 2013</creationDate>
+	
+	<!-- Derechos de autor del plugin -->
+	<copyright>Copyright (C) 2005 - 2014 Open Source Matters. All rights reserved.</copyright>
+	
+	<!-- Licencia de uso del plugin -->
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	
+	<!-- Correo de contacto del autor -->
+	<authorEmail>admin@joomla.org</authorEmail>
+	
+	<!-- Sitio web del autor del plugin -->
+	<authorUrl>www.joomla.org</authorUrl>
+	
+	<!-- Versión actual del plugin -->
+	<version>3.2.0</version>
+	
+	<!-- Clave de idioma que se usará para mostrar la descripción del plugin en la interfaz. 
+	     El texto real está en un archivo de idioma separado.
+	-->
+	<description>PLG_TWOFACTORAUTH_YUBIKEY_XML_DESCRIPTION</description>
+	
+	<!-- Archivos que se instalarán como parte del plugin -->
+	<files>
+		<!-- Archivo principal del plugin que contiene el código PHP con la lógica -->
+		<filename plugin="yubikey">yubikey.php</filename>
+		<!-- Archivo vacío usado para evitar el acceso directo a carpetas (medida de seguridad) -->
+		<filename>index.html</filename>
+		<!-- Carpeta que contiene archivos de plantilla (interfaz visual del plugin) -->
+		<folder>tmpl</folder>
+	</files>
+
+	<!-- Archivos de idioma incluidos para traducción -->
+	<languages>
+		<language tag="en-GB">en-GB.plg_twofactorauth_yubikey.ini</language>
+		<language tag="en-GB">en-GB.plg_twofactorauth_yubikey.sys.ini</language>
+	</languages>
+	
+	<!-- Sección de configuración del plugin que aparece en el administrador de Joomla -->
+	<config>
+		<fields name="params">
+
+			<fieldset name="basic">
+				<field name="section" type="radio"
+					default="3"
+					class="btn-group"
+					description="PLG_TWOFACTORAUTH_YUBIKEY_SECTION_DESC"
+					label="PLG_TWOFACTORAUTH_YUBIKEY_SECTION_LABEL"
+				>
+					<option value="1">PLG_TWOFACTORAUTH_YUBIKEY_SECTION_SITE</option>
+					<option value="2">PLG_TWOFACTORAUTH_YUBIKEY_SECTION_ADMIN</option>
+					<option value="3">PLG_TWOFACTORAUTH_YUBIKEY_SECTION_BOTH</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

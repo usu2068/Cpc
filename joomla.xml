@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension version="3.3" type="file" method="upgrade">
+<!-- Información general de la extensión -->
+	<name>files_joomla</name> <!-- Nombre de la extensión -->
+	<author>Joomla! Project</author> <!-- Autor de la extensión -->
+	<authorEmail>admin@joomla.org</authorEmail> <!-- Correo de contacto del autor -->
+	<authorUrl>www.joomla.org</authorUrl> <!-- URL del sitio web del autor -->
+	<copyright>(C) 2005 - 2014 Open Source Matters. All rights reserved</copyright> <!-- Derechos de autor -->
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license> <!-- Licencia GPL -->
+	<version>3.3.3</version> <!-- Versión de la extensión -->
+	<creationDate>July 2014</creationDate> <!-- Fecha de creación -->
+	<description>FILES_JOOMLA_XML_DESCRIPTION</description> <!-- Descripción (usada en traducciones) -->
+
+<!-- Archivo de script que maneja las instalaciones y actualizaciones -->
+	<scriptfile>administrator/components/com_admin/script.php</scriptfile>
+
+<!-- Sección de actualización -->
+	<update> <!-- Runs on update; New in 1.7 -->
+		<schemas> <!-- Define los archivos SQL de actualización para diferentes bases de datos -->
+			<schemapath type="mysql">administrator/components/com_admin/sql/updates/mysql</schemapath>
+			<schemapath type="sqlsrv">administrator/components/com_admin/sql/updates/sqlsrv</schemapath>
+			<schemapath type="sqlazure">administrator/components/com_admin/sql/updates/sqlazure</schemapath>
+			<schemapath type="postgresql">administrator/components/com_admin/sql/updates/postgresql</schemapath>
+		</schemas>
+	</update>
+
+<!-- Definición de los archivos y carpetas que componen la extensión -->
+	<fileset>
+		<files>
+		<!-- Carpetas incluidas en la extensión -->
+			<folder>administrator</folder>
+			<folder>bin</folder>
+			<folder>cache</folder>
+			<folder>cli</folder>
+			<folder>components</folder>
+			<folder>images</folder>
+			<folder>includes</folder>
+			<folder>language</folder>
+			<folder>layouts</folder>
+			<folder>libraries</folder>
+			<folder>logs</folder>
+			<folder>media</folder>
+			<folder>modules</folder>
+			<folder>plugins</folder>
+			<folder>templates</folder>
+			<folder>tmp</folder>
+
+			<!-- Archivos individuales incluidos en la extensión -->
+			<file>htaccess.txt</file> <!-- Archivo de configuración para Apache -->
+			<file>web.config.txt</file> <!-- Archivo de configuración para IIS -->
+			<file>LICENSE.txt</file> <!-- Información de la licencia -->
+			<file>README.txt</file> <!-- Archivo de información sobre Joomla -->
+			<file>index.php</file> <!-- Archivo de entrada principal -->
+		</files>
+	</fileset>
+
+<!-- Servidores de actualización para Joomla -->
+	<updateservers>
+		<server type="collection">http://update.joomla.org/core/list.xml</server>
+		<server type="collection">http://update.joomla.org/jed/list.xml</server>
+	</updateservers>
+</extension>

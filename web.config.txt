@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--Archivo de configuracion para el servidor web IIS (Internet Information Services).
+Este archivo define las reglas de reescritura y seguridad para joomla-->
+
+<configuration>
+   <system.webServer>
+       <rewrite>
+           <rules>
+           <!--Regla de seguridad: "Joomla! Rule 1"
+           Objetivo: Bloquear peticiones maliciosas que intenten explotar vulnerabilidades comunes.
+           -- Se bloquean solicitudes que contengan patrones sospechosos en la cadena de consulta (QUERY_STRING).
+           -- Se responde con un error 403 (Forbidden) cuando se detecta una solicitud sospechosa. 
+           -->
+               <rule name="Joomla! Rule 1" stopProcessing="true">
+               <!-- Coincide con cualquier URL -->
+                   <match url="^(.*)$" ignoreCase="false" />
+                   <conditions logicalGrouping="MatchAny">
+                   <!-- Bloquea inyecciones que usan base64_encode -->
+                       <add input="{QUERY_STRING}" pattern="base64_encode[^(]*\([^)]*\)" ignoreCase="false" />
+                       <!-- Bloquea ataques de inyección de script -->
+                       <add input="{QUERY_STRING}" pattern="(&gt;|%3C)([^s]*s)+cript.*(&lt;|%3E)" />
+                       <!-- Bloquea intentos de manipulación de variables globales de PHP -->
+                       <add input="{QUERY_STRING}" pattern="GLOBALS(=|\[|\%[0-9A-Z]{0,2})" ignoreCase="false" />
+                       <!-- Bloquea intentos de manipulación de la variable superglobal $_REQUEST -->
+                       <add input="{QUERY_STRING}" pattern="_REQUEST(=|\[|\%[0-9A-Z]{0,2})" ignoreCase="false" />
+                   </conditions>
+                   <!-- Respuesta con error 403 Forbidden -->
+                   <action type="CustomResponse" url="index.php" statusCode="403" statusReason="Forbidden" statusDescription="Forbidden" />
+               </rule>
+
+               <!--
+                   Regla de reescritura: "Joomla! Rule 2"
+                   Objetivo: Redirigir todas las solicitudes que no sean archivos o directorios físicos a index.php.
+                   - Permite que Joomla maneje la navegación amigable (SEF URLs).
+               -->
+               <rule name="Joomla! Rule 2">
+               <!-- Coincide con cualquier URL -->
+                   <match url="(.*)" ignoreCase="false" />
+                   <conditions logicalGrouping="MatchAll">
+                   <!-- Evita la redirección si la URL ya es index.php -->
+                     <add input="{URL}" pattern="^/index.php" ignoreCase="true" negate="true" />
+                     <!-- Evita la redirección si el archivo solicitado existe físicamente -->
+                     <add input="{REQUEST_FILENAME}" matchType="IsFile" ignoreCase="false" negate="true" />
+                     <!-- Evita la redirección si el directorio solicitado existe físicamente -->
+                     <add input="{REQUEST_FILENAME}" matchType="IsDirectory" ignoreCase="false" negate="true" />
+                   </conditions>
+                   <!-- Reescribe la URL para que pase por index.php -->
+                   <action type="Rewrite" url="index.php" />
+               </rule>
+           </rules>
+       </rewrite>
+   </system.webServer>
+</configuration>
+
+<!-- EXPLICACION DE reglas
+    Joomla! Rule 1 (Regla de seguridad)
+        Filtra solicitudes maliciosas analizando la cadena de consulta (QUERY_STRING).
+        Bloquea patrones usados en ataques comunes como base64_encode, inyecciones de scripts (script), y manipulaciones de variables GLOBALS y $_REQUEST.
+        Si se detecta una solicitud sospechosa, responde con un error HTTP 403 (Forbidden).
+
+    Joomla! Rule 2 (Regla de reescritura)
+        Permite que Joomla maneje las URLs amigables (SEF).
+        Redirige todas las solicitudes que no sean archivos o directorios físicos a index.php, permitiendo que el framework de Joomla determine la página a mostrar.
+ -->
