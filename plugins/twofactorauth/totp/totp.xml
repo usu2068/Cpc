@@ -1,3 +1,8 @@
+<!--
+ Archivo manifiesto de XML en jommla que describe la configuracion y componentes de un plugin del sistema - en este caso la autenticacion en doble factor.
+ ños codigos que generan usan TOTP (Time-Based One-Time) - codigo que se actualiza cada cierta cantidad de tiempo.
+-->
+
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.1" type="plugin" group="system">
 	<name>plg_twofactorauth_totp</name>

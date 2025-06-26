@@ -1,5 +1,7 @@
 <?php
 /**
+ * 
+ * 
  * @package     Joomla.Plugin
  * @subpackage  Twofactorauth.totp
  *

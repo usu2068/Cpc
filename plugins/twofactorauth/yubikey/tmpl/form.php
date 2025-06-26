@@ -3,6 +3,9 @@
  * @package     Joomla.Plugin
  * @subpackage  Twofactorauth.totp.tmpl
  *
+ * Plugin que cumple la funcion de implementar la autenticacion en doble factor en el sistema,
+ * usa Yubikey/TOTP en joomla
+ * 
  * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */

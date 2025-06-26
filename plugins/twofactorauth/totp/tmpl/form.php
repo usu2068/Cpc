@@ -1,5 +1,6 @@
 <?php
 /**
+ * Vista del formulario para la autenticacion en doble factor
  * @package     Joomla.Plugin
  * @subpackage  Twofactorauth.totp.tmpl
  *
