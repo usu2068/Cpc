@@ -1,3 +1,5 @@
+<!--Archivo manifiesto utilizado para definir, describir y registrar un plugin del tipo system
+informa a joomla como instalar y configurar el plugin.-->
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.1" type="plugin" group="system">
 	<name>plg_system_sef</name>

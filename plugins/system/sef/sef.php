@@ -3,6 +3,9 @@
  * @package     Joomla.Plugin
  * @subpackage  System.sef
  *
+ * Plugin del sistema de joomla, llamado SEF ( Search Engine Friendly), mejora las estructuras de las URLs 
+ * para que sean amigables con los motores de busqueda y tambien gestionar enlaces internos en el HTML
+ * 
  * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
