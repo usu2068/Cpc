@@ -1,0 +1,2 @@
+la carpeta system, contiene plugins del sistema que permiten desde la gestion de autenticacion en doble factor, hasta gestionar
+la cache del sistema para recordar informacion
