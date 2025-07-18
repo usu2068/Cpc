@@ -7,6 +7,14 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * Muestra un modal que permite realizar acciones masivas sobre multiples banners a la vez
+ * 
+ * Permite asignar un nuevo cliente a varios banners a la vez
+ * Cambia el idioma de todos los banenrs seleccionados
+ * Modifica el estado de la publicacion si aplica
+ * Realiza los cambios de forma masiva sin necesidad de editar uno por uno.
+ */
 defined('_JEXEC') or die;
 
 $published = $this->state->get('filter.published');
