@@ -1,3 +1,13 @@
+<!-- 
+Formulario que trae informacion desde el backend, 
+permite la edicion de banners publicitarios.
+
+Permite asociar banners a clientes y categorias
+Controlar fechas de Publicacion
+Aplicar seguimiento y metricas
+Añadir personalizaciones visuales o de comportamiento.
+-->
+
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="details"

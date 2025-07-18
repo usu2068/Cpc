@@ -1,3 +1,11 @@
+<!-- 
+Formulario que trae informacion desde el backend, 
+permite la edicion de banners publicitarios desde la vista del cliente.
+
+Permite al backend de Joomla! generar automáticamente la interfaz gráfica para la gestión de clientes
+Asegura la consistencia de datos gracias a la validación y campos obligatorios
+Facilita la integración con el sistema de seguimiento y estadísticas del componente com_banners
+-->
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="details"

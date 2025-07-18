@@ -1,0 +1,35 @@
+La carpeta plugins contiene subcarpetas con configuraciones de plugins para manejar de manera general el sistema:
+
+1. Authnetication: Contiene plugins para:
+    1. la gestion de cookies
+    2. Autenticacion mediante el uso de gmail
+    3. Autenticacion por credenciales registradas en la base de datos de joomla
+    4. Autenticacion por LDAP, permite validadr usuarios contra un servidor como Active Directory o OpenLDAP
+
+2. Captcha:
+    2.1 recaptcha - verificacion contra uso de maquinas
+
+3. Content:
+    3.1 Contact - informacion de contanto en paginas correspondientes
+    3.2 Emailcloak - protege direcciones de correo electronico que se encuentren en el contenido de jommla para que no puedan ser facilmente capturadas por spambots
+    3.3 Finder - sistema de busqueda avanzado integrado en joomla que indexa contenido estructurado para permitir busquedas mas rapidas, relevantes y precisas.
+    3.4 joomla - contenido general del sistema
+    3.5 Loadmodule - permite insertar modulos dentro de los articulos de contenido usando sitaxis especiales
+    3.6 pagebreak - Permite dividir el contenido de un articulo en varias paginas y generar automaticamente un indice o navegacion entre las secciones.
+    3.7 pagenavigation - habilita la navegacion entre paginas de un articulo
+    3.8 vote - mostrar la calificacion de un articulo en forma de estrella
+
+4. Editors:
+    4.1 codemirror - editor basado en codemirror, su funcion es proporcinar un entorno avanzado de edicion de codigo
+    4.2 none - 
+    4.3 tinymce
+
+5. Editors - xtd
+6. Extensions:
+7. Finder:
+8. Finder:
+9. Quickicon:
+10. Search
+11. System
+12. Twofactorauth
+13. User
