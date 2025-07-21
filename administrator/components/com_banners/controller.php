@@ -7,6 +7,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * Controla la visualizacion de vistas dentro del componente de banners
+ * Verifica la autorizacion de edicion de elementos antes de permitir el acceso al formulario de edicion
+ * establecer valores por defecto para view, layout e id
+ * ejecutar metodos auxiliares como BannersHelper::updateReset() al acceder al componente
+ * 
+ */
 defined('_JEXEC') or die;
 
 /**
