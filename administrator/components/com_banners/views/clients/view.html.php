@@ -7,6 +7,15 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * El código que compartes es una vista en el backend de Joomla para 
+ * listar clientes del componente com_banners. Está basado en el patrón 
+ * MVC (Modelo-Vista-Controlador) que utiliza Joomla. Esta clase es parte 
+ * fundamental para renderizar la pantalla de administración de clientes 
+ * de banners publicitarios.
+ * 
+ * 
+ */
 defined('_JEXEC') or die;
 
 /**

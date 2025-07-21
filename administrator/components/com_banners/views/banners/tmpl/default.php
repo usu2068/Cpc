@@ -7,6 +7,20 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * Este archivo PHP es parte del componente com_banners del backend de 
+ * Joomla. Se encarga de generar la interfaz de administración de banners 
+ * publicitarios, permitiendo al usuario ver, ordenar, filtrar, editar,
+ *  cambiar de estado, y realizar operaciones masivas (batch) sobre los 
+ * banners.
+ * 
+ * Muestra la lista de banners activos en el sistema Joomla en forma de 
+ * tabla en la vista administrativa, con herramientas para gestionar 
+ * su publicación, cliente, idioma, impresiones, clics, 
+ * y otras propiedades relevantes.
+ * 
+ */
+
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');

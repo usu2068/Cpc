@@ -7,6 +7,14 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * subclase JViewLegacy, usada para mostrar el formulario de edicion/creacion de un cliente en el administrador de joomla.
+ * se encarga de:
+ * cargar los deatos del cliente y el formulario
+ * validar que no haya errores
+ * Definir la barrera de harramientas (toolbar) contextual
+ * Renderizar la vista en el backend del administrador
+ */
 defined('_JEXEC') or die;
 
 JLoader::register('BannersHelper', JPATH_COMPONENT . '/helpers/banners.php');

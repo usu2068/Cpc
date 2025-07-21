@@ -7,6 +7,21 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * Este código PHP forma parte de la vista de clientes del componente 
+ * de banners (com_banners) del backend de Joomla. Su propósito es 
+ * mostrar una tabla interactiva con la lista de clientes de banners 
+ * publicitarios, permitiendo acciones como crear, editar, 
+ * publicar/despublicar, archivar o eliminar.
+ * 
+ * Su proposito general es:
+ * 
+ * listar todos los clientes asociados a banners
+ * Permite ordenar y filtrar clientes
+ * facilita acciones en masa: editar, publicar, archivar, eliminar, etc
+ * mostrar informacion como cantidad de banners, estado, contacto y tipo de compra.
+ */
+
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
