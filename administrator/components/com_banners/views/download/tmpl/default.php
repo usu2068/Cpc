@@ -7,6 +7,15 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * Proporciona un formulario en el backend de joomla para exportar o descargar los regsitros
+ * de seguimiento (tracks) de "banners publicitarios" - entiendase que los banners
+ * son solo vistas orientadas al modelo MVC.
+ * 
+ * Permite a un administrador exportar los datos de seguimiento, por ejemplo:
+ * clic o impresiones, desde el sistema joomla a un archivo, utilizanndo una interfaz sencilla en una 
+ * ventana emergente
+ */
 defined('_JEXEC') or die;
 ?>
 <form

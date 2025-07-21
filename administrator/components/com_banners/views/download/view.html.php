@@ -7,6 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * Define la vista del backend de joomla para mostrar un formulario de descarga
+ * de registros de seguimiento del componente com_banners.
+ */
+
 defined('_JEXEC') or die;
 
 /**
