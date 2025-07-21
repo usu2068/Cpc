@@ -7,6 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * Gestiona la visualizacion y administracion de los registros de seguimiento
+ * de banners, los tracks son registros que indican cuantas veces se ha mostrado o cliqueado un banner.
+ */
+
 defined('_JEXEC') or die;
 
 /**

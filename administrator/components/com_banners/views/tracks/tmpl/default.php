@@ -7,6 +7,16 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+/**
+ * muestra y administra un listado de registos de seguimiento, como impresiones y clics
+ * en el area de administracion.
+ * 
+ * Permite ver los registros de manera visual - interacciones, clics, impresiones, etc.
+ * filtrar por fechas
+ * Ordenar los resultados por distintos campos (nombre, cliente, tipo, cantidad, fecha)
+ * navegar por paginacion 
+ * usar interfaz moderna (tooltips, calendarios, listas ordenadas)
+ */
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
